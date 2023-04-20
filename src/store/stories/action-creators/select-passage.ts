@@ -141,9 +141,12 @@ export function selectPassagesInRect(
 
 			const selected = rectsIntersect(rect, passage);
 
+			/**
+			 * TODO: always reads as a deselect, for some reason this is the ONLY function that calls deselect?
+			 */
 			if (passage.selected !== selected) {
 				passageUpdates[passage.id] = {selected};
-				console.log("selected");
+				console.log("deselected");
 				console.log(passage);
 			}
 		});

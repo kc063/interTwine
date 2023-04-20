@@ -2,7 +2,7 @@ import * as React from 'react';
 import {useTranslation} from 'react-i18next';
 import {RouteToolbar} from '../../../components/route-toolbar';
 import {StorageQuota} from '../../../components/storage-quota/storage-quota';
-import {BuildActions, AppActions} from '../../../route-actions';
+import {BuildActions, AppActions, CollabActions} from '../../../route-actions';
 import {Story, useStoriesContext} from '../../../store/stories';
 import {LibraryActions} from './library/library-actions';
 import {StoryActions} from './story/story-actions';

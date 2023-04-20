@@ -3,6 +3,8 @@ import {axe} from 'jest-axe';
 import * as React from 'react';
 import {RouteToolbar, RouteToolbarProps} from '../route-toolbar';
 
+//TODO: FIX TESTS
+
 jest.mock('../back-button');
 
 describe('<RouteToolbar>', () => {
@@ -49,6 +51,7 @@ describe('<RouteToolbar>', () => {
 		renderComponent({pinnedControls: <div data-testid="pinned-control" />});
 		expect(screen.getByTestId('pinned-control')).toBeInTheDocument();
 	});
+
 
 	it('is accessible', async () => {
 		const {container} = renderComponent();
