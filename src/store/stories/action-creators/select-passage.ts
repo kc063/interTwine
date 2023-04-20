@@ -20,6 +20,8 @@ export function deselectAllPassages(
 		story.passages.forEach(passage => {
 			if (passage.selected) {
 				passageUpdates[passage.id] = {selected: false};
+				console.log("deselected");
+				console.log(passage);
 			}
 		});
 
@@ -52,6 +54,8 @@ export function deselectPassage(
 				props: {selected: false},
 				storyId: story.id
 			});
+			console.log("deselected");
+			console.log(passage);
 		}
 	};
 }
@@ -68,6 +72,8 @@ export function selectAllPassages(
 		story.passages.forEach(passage => {
 			if (!passage.selected) {
 				passageUpdates[passage.id] = {selected: true};
+				console.log("selected");
+				console.log(passage);
 			}
 		});
 
@@ -98,12 +104,16 @@ export function selectPassage(
 
 		if (!passage.selected) {
 			passageUpdates[passage.id] = {selected: true};
+			console.log("selected");
+			console.log(passage);
 		}
 
 		if (exclusive) {
 			story.passages.forEach(p => {
 				if (p.id !== passage.id && p.selected) {
 					passageUpdates[p.id] = {selected: false};
+					console.log("deselected");
+					console.log(passage);
 				}
 			});
 		}
@@ -133,6 +143,8 @@ export function selectPassagesInRect(
 
 			if (passage.selected !== selected) {
 				passageUpdates[passage.id] = {selected};
+				console.log("selected");
+				console.log(passage);
 			}
 		});
 

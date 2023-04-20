@@ -73,7 +73,7 @@ export const PassageCard: React.FC<PassageCardProps> = React.memo(props => {
 		(event: MouseEvent) => {
 			// Shift- or control-clicking toggles our selected status, but doesn't
 			// affect any other passage's selected status. If the shift or control key
-			// was not held down and we were not already selected, we know the user
+			// was not held down, and we were not already selected, we know the user
 			// wants to select only this passage.
 
 			if (event.shiftKey || event.ctrlKey) {
