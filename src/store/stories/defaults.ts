@@ -10,7 +10,9 @@ export const passageDefaults = (): Omit<Passage, 'id' | 'story'> => ({
 	tags: [],
 	text: '',
 	top: 0,
-	width: 100
+	width: 100,
+	claimed: false,
+	user: ""
 });
 
 export const storyDefaults = (): Omit<Story, 'id'> => ({
@@ -27,5 +29,7 @@ export const storyDefaults = (): Omit<Story, 'id'> => ({
 	stylesheet: '',
 	tags: [],
 	tagColors: {},
-	zoom: 1
+	zoom: 1,
+	owner: "",
+	editors: []
 });

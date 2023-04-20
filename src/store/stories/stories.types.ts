@@ -50,6 +50,18 @@ export interface Passage {
 	 * Width of the passage in pixels.
 	 */
 	width: number;
+	/**
+	 * InterTwine Dev Tools under here.
+	 */
+
+	/**
+	 * If passage has been claimed.
+	 */
+	claimed: boolean;
+	/**
+	 * If claimed, who passage has been claimed by.
+	 */
+	user: string;
 }
 
 export interface Story {
@@ -113,6 +125,18 @@ export interface Story {
 	 * Zoom level the story is displayed at.
 	 */
 	zoom: number;
+	/**
+	 * InterTwine Dev Tools under here.
+	 */
+
+	/**
+	 * Owner of the story.
+	 */
+	owner: string;
+	/**
+	 * People who are allowed to edit the story.
+	 */
+	editors: string[];
 }
 
 export type StoriesState = Story[];
