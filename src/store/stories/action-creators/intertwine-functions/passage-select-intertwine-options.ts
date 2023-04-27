@@ -10,11 +10,13 @@ import {Passage, Story} from "../../stories.types";
 export async function onSelectPassage(story: Story,
     passage: Passage,
     exclusive: boolean): Promise<boolean> {
+  console.log("ping 1");
   //appropriate backend call
   fetch("http://localhost:3232/passages?id=" + passage.id)
   .then((response: Response) => response.json())
   .then(
       (responseObject: any) => {
+        console.log("ping2");
         if (isSelectSuccessResponse(responseObject)) {
           if(isPassage(responseObject.data)){
             console.log(responseObject.data);

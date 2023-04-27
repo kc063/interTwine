@@ -7,6 +7,7 @@ import {
 	UpdatePassageAction,
 	UpdatePassagesAction
 } from '../stories.types';
+import {onSelectPassage} from "./intertwine-functions";
 
 /**
  * Deselects all passages.
@@ -104,8 +105,8 @@ export function selectPassage(
 
 		if (!passage.selected) {
 			passageUpdates[passage.id] = {selected: true};
+			onSelectPassage(story, passage,exclusive);
 			console.log("selected");
-			console.log(passage);
 		}
 
 		if (exclusive) {
