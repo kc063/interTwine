@@ -10,13 +10,21 @@ import {Passage, Story} from "../../stories.types";
 export async function onSelectPassage(story: Story,
     passage: Passage,
     exclusive: boolean): Promise<boolean> {
-  console.log("ping 1");
+  console.log("p1");
   //appropriate backend call
-  fetch("http://localhost:3232/passages?id=" + passage.id)
+  fetch("http://localhost:3232/passages?id=" + passage.id,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+  )
   .then((response: Response) => response.json())
   .then(
       (responseObject: any) => {
-        console.log("ping2");
+        console.log("p2");
+        console.log(responseObject);
         if (isSelectSuccessResponse(responseObject)) {
           if(isPassage(responseObject.data)){
             console.log(responseObject.data);
@@ -62,6 +70,47 @@ export async function onSelectPassage(story: Story,
 export function onDeselectPassage(story: Story,
                                 passage: Passage,
                                 exclusive: boolean){
+  console.log("p1");
+  //appropriate backend call
+  fetch("http://localhost:3232/passages?id=" + JSON.stringify(passage),
+      {
+        method: 'POST',
+        body: JSON.stringify(passage),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+  )
+  .then((response: Response) => response.json())
+  .then(
+      (responseObject: any) => {
+        console.log("p2");
+        console.log(responseObject);
+        if (isSelectSuccessResponse(responseObject)) {
+          if(isPassage(responseObject.data)){
+            console.log(responseObject.data);
+            //TODO: UPDATE PASSAGE!
+          }
+          else{
+            console.log("Error: response was success, but data was malformed passage.")
+          }
+        }
+        else if (isSelectClaimedResponse(responseObject)) {
+          if(isPassage(responseObject.data)){
+            console.log(responseObject.data);
+            //TODO: UPDATE PASSAGE!
+          }
+          else{
+            console.log("Error: response was claimed, but data was malformed passage.")
+          }
+        }
+        else if (isSelectDeleteResponse(responseObject)) {
+          console.log(responseObject.result);
+          //TODO: DELETE PASSAGE!
+        }
+        else {
+          console.log("Error: bad response type.");
+        }})
 
 }
 
