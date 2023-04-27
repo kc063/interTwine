@@ -7,7 +7,8 @@ export const content = () => [
 		html: 'routes.welcome.greeting',
 		image: <IconTwine />,
 		nextLabel: 'routes.welcome.tellMeMore',
-		title: 'routes.welcome.greetingTitle'
+		title: 'routes.welcome.greetingTitle',
+		loginLabel: 'routes.welcome.loginLabel'
 	},
 	{
 		html: 'routes.welcome.help',

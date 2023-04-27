@@ -8,6 +8,7 @@ import {WelcomeCard} from '../../components/welcome/welcome-card';
 import {setPref, usePrefsContext} from '../../store/prefs';
 import {content} from './content';
 import './welcome-route.css';
+import {useAuth0} from '@auth0/auth0-react';
 
 export const WelcomeRoute: React.FC = () => {
 	const containerEl = React.useRef<HTMLDivElement>(null);
@@ -15,10 +16,10 @@ export const WelcomeRoute: React.FC = () => {
 	const history = useHistory();
 	const [shown, setShown] = React.useState(1);
 	const allCards = React.useMemo(content, []);
-	const visibleCards = React.useMemo(() => allCards.slice(0, shown), [
-		allCards,
-		shown
-	]);
+	const visibleCards = React.useMemo(
+		() => allCards.slice(0, shown),
+		[allCards, shown]
+	);
 	const {t} = useTranslation();
 
 	React.useEffect(() => {
@@ -38,11 +39,14 @@ export const WelcomeRoute: React.FC = () => {
 	}, [shown]);
 
 	const finish = () => {
-		dispatch(setPref('welcomeSeen', true));
+		// dispatch(setPref('welcomeSeen', true));
 		history.push('/');
+		console.log('welcome seen');
 	};
 
 	const showNext = () => setShown(shown => shown + 1);
+
+	const {loginWithRedirect} = useAuth0();
 
 	return (
 		<div className="welcome-route" ref={containerEl}>
@@ -62,6 +66,12 @@ export const WelcomeRoute: React.FC = () => {
 								onSkip={finish}
 								showSkip={index === 0}
 								title={t(card.title)}
+								showLogin={index === 0}
+								loginLabel={index === 0 ? card.loginLabel : undefined}
+								onLogin={() => {
+									loginWithRedirect();
+									console.log('Logged In');
+								}}
 							>
 								<div dangerouslySetInnerHTML={{__html: t(card.html)}} />
 							</WelcomeCard>

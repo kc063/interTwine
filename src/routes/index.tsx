@@ -8,6 +8,8 @@ import {StoryPlayRoute} from './story-play';
 import {StoryProofRoute} from './story-proof';
 import {StoryTestRoute} from './story-test';
 import {WelcomeRoute} from './welcome';
+import {useHistory} from 'react-router-dom';
+import {Auth0Provider, useAuth0} from '@auth0/auth0-react';
 
 export const Routes: React.FC = () => {
 	const {prefs} = usePrefsContext();
@@ -16,10 +18,12 @@ export const Routes: React.FC = () => {
 	// formats, we need the document HREF to reflect where the HTML file is.
 	// Otherwise we'd have to store the actual location somewhere, which will
 	// differ between web and Electron contexts.
+	const {isAuthenticated} = useAuth0();
+	console.log('isAuthenticated: ', isAuthenticated);
 
 	return (
 		<HashRouter>
-			{prefs.welcomeSeen ? (
+			{isAuthenticated ? (
 				<Switch>
 					<Route exact path="/">
 						<StoryListRoute />
@@ -27,9 +31,9 @@ export const Routes: React.FC = () => {
 					<Route path="/story-formats">
 						<StoryFormatListRoute />
 					</Route>
-					<Route path="/welcome">
-						<WelcomeRoute />
-					</Route>
+					{/* <Route path="/welcome">
+							<WelcomeRoute />
+						</Route> */}
 					<Route path="/stories/:storyId/play">
 						<StoryPlayRoute />
 					</Route>
