@@ -51,7 +51,8 @@
 		"undoChange": "Undo {{change}}",
 		"unmaximize": "Restore Size",
 		"view": "View",
-		"login": "Log In"
+		"login": "Log In",
+		"logout": "Log Out"
 	},
 	"components": {
 		"addTagButton": {

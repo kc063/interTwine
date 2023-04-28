@@ -10,6 +10,8 @@ import {ViewActions} from './view/view-actions';
 
 export interface StoryListToolbarProps {
 	selectedStories: Story[];
+	// showProf: boolean;
+	// showStoryNav: boolean;
 }
 
 export const StoryListToolbar: React.FC<StoryListToolbarProps> = props => {
