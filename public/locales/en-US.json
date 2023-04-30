@@ -50,7 +50,9 @@
 		"undo": "Undo",
 		"undoChange": "Undo {{change}}",
 		"unmaximize": "Restore Size",
-		"view": "View"
+		"view": "View",
+		"login": "Log In",
+		"logout": "Log Out"
 	},
 	"components": {
 		"addTagButton": {
@@ -371,7 +373,8 @@
 			"greetingTitle": "Hi!",
 			"tellMeMore": "Tell Me More",
 			"help": "<p><strong>If you've never used Twine before, then welcome!</strong> The <a href=\"https://twinery.org/cookbook\">Twine Cookbook</a> is a great resource for learning how to use it. If you haven't used Twine before, it's a great place to start.</p>",
-			"helpTitle": "New here?"
+			"helpTitle": "New here?",
+			"loginTitle": "Log In"
 		}
 	},
 	"routeActions": {

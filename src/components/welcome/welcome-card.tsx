@@ -13,6 +13,9 @@ export interface WelcomeCardProps extends CardProps {
 	onSkip: () => void;
 	showSkip: boolean;
 	title: string;
+	loginLabel: string | undefined;
+	onLogin: () => void;
+	showLogin: boolean;
 }
 
 export const WelcomeCard: React.FC<WelcomeCardProps> = props => {
@@ -24,6 +27,9 @@ export const WelcomeCard: React.FC<WelcomeCardProps> = props => {
 		onSkip,
 		showSkip,
 		title,
+		showLogin,
+		loginLabel,
+		onLogin,
 		...otherProps
 	} = props;
 	const {t} = useTranslation();
@@ -48,6 +54,13 @@ export const WelcomeCard: React.FC<WelcomeCardProps> = props => {
 							icon={<IconArrowBarToRight />}
 							label={t('common.skip')}
 							onClick={onSkip}
+						/>
+					)}
+					{showLogin && (
+						<IconButton
+							icon={<IconArrowBarToRight />}
+							label={t('common.login')}
+							onClick={onLogin}
 						/>
 					)}
 				</ButtonBar>
