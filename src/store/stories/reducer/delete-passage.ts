@@ -1,4 +1,5 @@
 import {StoriesState} from '../stories.types';
+import {onDeletePassage} from "../action-creators/intertwine-functions";
 
 export function deletePassage(
 	state: StoriesState,
@@ -46,6 +47,6 @@ export function deletePassage(
 		);
 		return state;
 	}
-
+	onDeletePassage(storyId, passageId);
 	return newState;
 }

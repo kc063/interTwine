@@ -1,6 +1,7 @@
 import uuid from 'tiny-uuid';
 import {passageDefaults} from '../defaults';
 import {Passage, Story, StoriesState} from '../stories.types';
+import {onCreatePassage} from "../action-creators/intertwine-functions";
 
 export function createPassage(
 	state: StoriesState,
@@ -48,6 +49,7 @@ export function createPassage(
 		if (newStory.passages.length === 1) {
 			newStory.startPassage = newPassage.id;
 		}
+		onCreatePassage(newPassage, storyId);
 
 		created = true;
 		return newStory;

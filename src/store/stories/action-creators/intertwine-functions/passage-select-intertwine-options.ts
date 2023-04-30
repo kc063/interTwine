@@ -1,4 +1,5 @@
-import {Passage, Story} from "../../stories.types";
+import {Passage, StoriesState, Story, UpdatePassageAction} from "../../stories.types";
+import {Thunk} from "react-hook-thunk-reducer";
 
 
 /**
@@ -8,9 +9,9 @@ import {Passage, Story} from "../../stories.types";
  * @param exclusive
  */
 export async function onSelectPassage(story: Story,
-    passage: Passage,
-    exclusive: boolean): Promise<boolean> {
-  //appropriate backend call
+    passage: Passage): Promise<any> {
+  console.log("p1");
+  //function here to "buffer"/"wait" while backend call happens
   fetch("http://localhost:3232/passages?id=" + passage.id,
       {
         method: 'GET',
@@ -22,20 +23,33 @@ export async function onSelectPassage(story: Story,
   .then((response: Response) => response.json())
   .then(
       (responseObject: any) => {
-        console.log(responseObject);
         if (isSelectSuccessResponse(responseObject)) {
-          if(isPassage(responseObject.data)){
+          if (isPassage(responseObject.data)) {
             console.log(responseObject.data);
-            //TODO: UPDATE PASSAGE!
+            return (dispatch: (arg0: { type: string; passageId: string; props: Passage; storyId: string; }) => void) => {
+              dispatch({
+                type: 'updatePassage',
+                passageId: passage.id,
+                props: responseObject.data,
+                storyId: story.id
+              });
+            }
           }
           else{
             console.log("Error: response was success, but data was malformed passage.")
           }
         }
         else if (isSelectClaimedResponse(responseObject)) {
-          if(isPassage(responseObject.data)){
+          if(isPassage(responseObject.data)) {
             console.log(responseObject.data);
-            //TODO: UPDATE PASSAGE!
+            return (dispatch: (arg0: { type: string; passageId: string; props: Passage; storyId: string; }) => void) => {
+              dispatch({
+                type: 'updatePassage',
+                passageId: passage.id,
+                props: responseObject.data,
+                storyId: story.id
+              });
+            }
           }
           else{
             console.log("Error: response was claimed, but data was malformed passage.")
@@ -43,7 +57,13 @@ export async function onSelectPassage(story: Story,
         }
         else if (isSelectDeleteResponse(responseObject)) {
           console.log(responseObject.result);
-          //TODO: DELETE PASSAGE!
+          return (dispatch: (arg0: { type: string; passageId: string; storyId: string; }) => void) => {
+            dispatch({
+              type: 'deletePassage',
+              passageId: passage.id,
+              storyId: story.id
+            });
+          }
         }
         else {
           console.log("Error: bad response type.");
@@ -66,8 +86,8 @@ export async function onSelectPassage(story: Story,
  * @param exclusive
  */
 export function onDeselectPassage(story: Story,
-                                passage:Passage){
-  console.log("p3");
+                                passage: Passage): any{
+  console.log(JSON.stringify(passage));
   //appropriate backend call
   fetch("http://localhost:3232/passages?id=" + JSON.stringify(passage),
       {
@@ -81,32 +101,11 @@ export function onDeselectPassage(story: Story,
   .then((response: Response) => response.json())
   .then(
       (responseObject: any) => {
-        console.log("p4");
-        console.log(responseObject);
         if (isSelectSuccessResponse(responseObject)) {
-          if(isPassage(responseObject.data)){
-            console.log(responseObject.data);
-            //TODO: UPDATE PASSAGE!
-          }
-          else{
-            console.log("Error: response was success, but data was malformed passage.")
-          }
-        }
-        else if (isSelectClaimedResponse(responseObject)) {
-          if(isPassage(responseObject.data)){
-            console.log(responseObject.data);
-            //TODO: UPDATE PASSAGE!
-          }
-          else{
-            console.log("Error: response was claimed, but data was malformed passage.")
-          }
-        }
-        else if (isSelectDeleteResponse(responseObject)) {
-          console.log(responseObject.result);
-          //TODO: DELETE PASSAGE!
+          //all good!
         }
         else {
-          console.log("Error: bad response type.");
+          console.log("Handle error for ");
         }})
 
 }
@@ -116,7 +115,7 @@ export function onDeselectPassage(story: Story,
  * @param story
  * @param passage
  */
-export function onNewPassage(story: Story, passage: Passage){
+export function onCreatePassage(passage: Passage, storyId: string){
 
 }
 
@@ -126,7 +125,7 @@ export function onNewPassage(story: Story, passage: Passage){
  * @param passage
  * @param exclusive
  */
-export function onDeletePassage(story: Story, passage: Passage, exclusive: boolean){
+export function onDeletePassage(storyId: string, passageId: string){
 
 }
 

@@ -1,5 +1,6 @@
 import {Story, UpdateStoryAction} from '../stories.types';
 import {storyFileName} from '../../../electron/shared';
+import {ownerUpdateFunction} from "./intertwine-functions";
 
 /**
  * General update of a story.
@@ -17,7 +18,8 @@ export function updateStory(
 	) {
 		throw new Error(`There is already a story named "${props.name}".`);
 	}
-
+  //TODO: not convinced this is the right place
+	ownerUpdateFunction(story, props);
 	return {
 		props,
 		storyId: story.id,

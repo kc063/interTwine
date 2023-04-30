@@ -22,7 +22,7 @@ export function deselectAllPassages(
 			if (passage.selected) {
 				passageUpdates[passage.id] = {selected: false};
 				console.log("deselected");
-				console.log(passage);
+				onDeselectPassage(story, passage);
 			}
 		});
 
@@ -56,8 +56,7 @@ export function deselectPassage(
 				storyId: story.id
 			});
 			console.log("deselected");
-			onDeselectPassage(story, passage);
-		}
+			onDeselectPassage(story, passage);}
 	};
 }
 
@@ -74,7 +73,7 @@ export function selectAllPassages(
 			if (!passage.selected) {
 				passageUpdates[passage.id] = {selected: true};
 				console.log("selected");
-				console.log(passage);
+				onSelectPassage(story, passage);
 			}
 		});
 
@@ -105,7 +104,7 @@ export function selectPassage(
 
 		if (!passage.selected) {
 			passageUpdates[passage.id] = {selected: true};
-			onSelectPassage(story, passage,exclusive);
+			onSelectPassage(story, passage);
 			console.log("selected");
 		}
 
@@ -113,6 +112,7 @@ export function selectPassage(
 			story.passages.forEach(p => {
 				if (p.id !== passage.id && p.selected) {
 					passageUpdates[p.id] = {selected: false};
+					onDeselectPassage(story, passage);
 					console.log("deselected");
 					console.log(passage);
 				}
@@ -147,8 +147,8 @@ export function selectPassagesInRect(
 			 */
 			if (passage.selected !== selected) {
 				passageUpdates[passage.id] = {selected};
+				onDeselectPassage(story, passage);
 				console.log("deselected");
-				console.log(passage);
 			}
 		});
 

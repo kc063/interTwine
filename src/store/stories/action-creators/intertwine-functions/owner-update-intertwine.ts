@@ -2,6 +2,8 @@
  * an assembly of functions for owner-specific updates (deleting the story, changing title, etc.)
  */
 
+import {Story} from "../../stories.types";
+
 /** functions necessary:
  * find and replace (generally figure out how to handle find and replace)
  * rename
@@ -11,5 +13,5 @@
  * stylesheet
  */
 
-export function temp(){
+export function ownerUpdateFunction(story: Story, props:Partial<Story>){
 }
