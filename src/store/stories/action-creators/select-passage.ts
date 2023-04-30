@@ -7,7 +7,7 @@ import {
 	UpdatePassageAction,
 	UpdatePassagesAction
 } from '../stories.types';
-import {onSelectPassage} from "./intertwine-functions";
+import {onDeselectPassage, onSelectPassage} from "./intertwine-functions";
 
 /**
  * Deselects all passages.
@@ -56,7 +56,7 @@ export function deselectPassage(
 				storyId: story.id
 			});
 			console.log("deselected");
-			console.log(passage);
+			onDeselectPassage(story, passage);
 		}
 	};
 }

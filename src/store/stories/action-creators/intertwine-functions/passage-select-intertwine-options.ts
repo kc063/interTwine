@@ -10,7 +10,6 @@ import {Passage, Story} from "../../stories.types";
 export async function onSelectPassage(story: Story,
     passage: Passage,
     exclusive: boolean): Promise<boolean> {
-  console.log("p1");
   //appropriate backend call
   fetch("http://localhost:3232/passages?id=" + passage.id,
       {
@@ -23,7 +22,6 @@ export async function onSelectPassage(story: Story,
   .then((response: Response) => response.json())
   .then(
       (responseObject: any) => {
-        console.log("p2");
         console.log(responseObject);
         if (isSelectSuccessResponse(responseObject)) {
           if(isPassage(responseObject.data)){
@@ -68,9 +66,8 @@ export async function onSelectPassage(story: Story,
  * @param exclusive
  */
 export function onDeselectPassage(story: Story,
-                                passage: Passage,
-                                exclusive: boolean){
-  console.log("p1");
+                                passage:Passage){
+  console.log("p3");
   //appropriate backend call
   fetch("http://localhost:3232/passages?id=" + JSON.stringify(passage),
       {
@@ -84,7 +81,7 @@ export function onDeselectPassage(story: Story,
   .then((response: Response) => response.json())
   .then(
       (responseObject: any) => {
-        console.log("p2");
+        console.log("p4");
         console.log(responseObject);
         if (isSelectSuccessResponse(responseObject)) {
           if(isPassage(responseObject.data)){
@@ -118,9 +115,8 @@ export function onDeselectPassage(story: Story,
  * function to run when CREATING A NEW PASSAGE
  * @param story
  * @param passage
- * @param exclusive
  */
-export function onNewPassage(story: Story, passage: Passage, exclusive: boolean){
+export function onNewPassage(story: Story, passage: Passage){
 
 }
 
