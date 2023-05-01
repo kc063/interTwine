@@ -24,8 +24,8 @@ export const App: React.FC = () => {
 	const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
 	return (
 		<Auth0Provider
-			domain={domain == undefined ? '' : domain}
-			clientId={clientId == undefined ? '' : clientId}
+			domain={domain === undefined ? '' : domain}
+			clientId={clientId === undefined ? '' : clientId}
 			authorizationParams={{
 				redirect_uri: window.location.origin,
 				onRedirectCallback: onRedirectCallback

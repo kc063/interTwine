@@ -43,7 +43,7 @@ export const RouteToolbar: React.FC<RouteToolbarProps> = props => {
 						/>
 						<IconButton
 							icon={<IconUserCircle />}
-							label={t('Log Out')}
+							label={'Log Out'}
 							onClick={() => logout()}
 						/>
 					</div>
