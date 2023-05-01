@@ -47,6 +47,6 @@ export function deletePassage(
 		);
 		return state;
 	}
-	onDeletePassage(storyId, passageId);
+	onDeletePassage(passageId);
 	return newState;
 }
