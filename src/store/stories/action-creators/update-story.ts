@@ -19,7 +19,7 @@ export function updateStory(
 		throw new Error(`There is already a story named "${props.name}".`);
 	}
   //TODO: not convinced this is the right place
-	ownerUpdateFunction(story, props);
+	ownerUpdateFunction(story);
 	return {
 		props,
 		storyId: story.id,

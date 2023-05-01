@@ -49,7 +49,7 @@ export function createPassage(
 		if (newStory.passages.length === 1) {
 			newStory.startPassage = newPassage.id;
 		}
-		onCreatePassage(newPassage, storyId);
+		onCreatePassage(newPassage);
 
 		created = true;
 		return newStory;

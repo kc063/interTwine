@@ -13,5 +13,6 @@ import {Story} from "../../stories.types";
  * stylesheet
  */
 
-export function ownerUpdateFunction(story: Story, props:Partial<Story>){
+export function ownerUpdateFunction(story: Story){
+
 }

@@ -10,8 +10,7 @@ import {useAuth0} from "@auth0/auth0-react";
  * @param exclusive
  */
 export async function onSelectPassage(story: Story,
-    passage: Passage): Promise<any> {
-  //function here to "buffer"/"wait" while backend call happens
+    passage: Passage):Promise<any>{
   fetch("http://localhost:3232/passages?id=" + passage.id,
       {
         method: 'GET',
@@ -71,7 +70,8 @@ export async function onSelectPassage(story: Story,
           }
         }
         else {
-          console.log("Error: bad response type.");
+          console.log("Error: bad response type for selection.");
+          console.log(responseObject);
         }})
   return true;
 }
@@ -83,8 +83,7 @@ export async function onSelectPassage(story: Story,
  * @param exclusive
  */
 export function onDeselectPassage(story: Story,
-                                passage: Passage): any{
-  //does this set correctly
+                                passage: Passage){
   passage.claimed = false;
   passage.user = "";
   console.log(JSON.stringify(passage));
@@ -105,6 +104,7 @@ export function onDeselectPassage(story: Story,
         }
         else {
           console.log("Handle error for deselection/update.");
+          console.log(responseObject);
         }})
 }
 
@@ -133,6 +133,7 @@ export function onCreatePassage(passage: Passage){
         }
         else {
           console.log("Handle error for creation.");
+          console.log(responseObject);
         }})
 
 
