@@ -11,6 +11,7 @@ import {WelcomeRoute} from './welcome';
 import {useHistory} from 'react-router-dom';
 import {Auth0Provider, useAuth0} from '@auth0/auth0-react';
 import {ProfileRoute} from './profile/profile-route';
+import Loading from '../components/loading';
 
 export const Routes: React.FC = () => {
 	const {prefs} = usePrefsContext();
@@ -21,6 +22,11 @@ export const Routes: React.FC = () => {
 	// differ between web and Electron contexts.
 	const {isAuthenticated} = useAuth0();
 	console.log('isAuthenticated: ', isAuthenticated);
+
+	const {isLoading} = useAuth0();
+	if (isLoading) {
+		return <Loading />;
+	}
 
 	return (
 		<HashRouter>
