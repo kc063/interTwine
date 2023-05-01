@@ -1,13 +1,15 @@
 import {StoriesState} from '../stories.types';
+import {onDeleteStory} from "../action-creators/intertwine-functions";
 
 export function deleteStory(state: StoriesState, storyId: string) {
 	let deleted = false;
 	const newState = state.filter(story => {
 		if (story.id === storyId) {
 			deleted = true;
+			onDeleteStory(storyId);
 			return false;
 		}
-
+    onDeleteStory(storyId);
 		return true;
 	});
 

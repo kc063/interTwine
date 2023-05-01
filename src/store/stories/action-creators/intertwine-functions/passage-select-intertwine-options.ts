@@ -10,7 +10,6 @@ import {Thunk} from "react-hook-thunk-reducer";
  */
 export async function onSelectPassage(story: Story,
     passage: Passage): Promise<any> {
-  console.log("p1");
   //function here to "buffer"/"wait" while backend call happens
   fetch("http://localhost:3232/passages?id=" + passage.id,
       {
@@ -26,6 +25,8 @@ export async function onSelectPassage(story: Story,
         if (isSelectSuccessResponse(responseObject)) {
           if (isPassage(responseObject.data)) {
             console.log(responseObject.data);
+            //passage.user = thisUserID;
+            passage.claimed = true;
             return (dispatch: (arg0: { type: string; passageId: string; props: Passage; storyId: string; }) => void) => {
               dispatch({
                 type: 'updatePassage',
@@ -87,6 +88,9 @@ export async function onSelectPassage(story: Story,
  */
 export function onDeselectPassage(story: Story,
                                 passage: Passage): any{
+  //does this set correctly
+  passage.claimed = false;
+  passage.user = "";
   console.log(JSON.stringify(passage));
   //appropriate backend call
   fetch("http://localhost:3232/passages?id=" + JSON.stringify(passage),

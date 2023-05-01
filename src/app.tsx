@@ -11,7 +11,7 @@ import {ThemeSetter} from './store/theme-setter';
 import 'focus-visible';
 import './styles/typography.css';
 import './styles/focus-visible-shim.css';
-// import Auth0ProviderWithHistory from './components/auth0-provider-with-history';
+//import Auth0ProviderWithHistory from './components/auth0-provider-with-history';
 import {Auth0Provider} from '@auth0/auth0-react';
 import {useHistory} from 'react-router-dom';
 

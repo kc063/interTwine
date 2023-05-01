@@ -2,6 +2,8 @@ import * as React from 'react';
 import * as prefs from './prefs';
 import * as stories from './stories';
 import * as storyFormats from './story-formats';
+import {libload} from "../../stories/action-creators/intertwine-functions";
+
 
 export function useLocalStoragePersistence() {
 	return React.useMemo(
@@ -12,6 +14,7 @@ export function useLocalStoragePersistence() {
 			},
 			stories: {
 				load: stories.load,
+				//load: libload(),
 				saveMiddleware: stories.saveMiddleware
 			},
 			storyFormats: {

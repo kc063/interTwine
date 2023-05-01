@@ -1,6 +1,7 @@
 import uuid from 'tiny-uuid';
 import {passageDefaults, storyDefaults} from '../defaults';
 import {Story, StoriesState} from '../stories.types';
+import {onCreateStory} from "../action-creators/intertwine-functions";
 
 export function createStory(state: StoriesState, storyProps: Partial<Story>) {
 	if ('id' in storyProps && state.some(story => story.id === storyProps.id)) {
@@ -39,6 +40,6 @@ export function createStory(state: StoriesState, storyProps: Partial<Story>) {
 		...passage,
 		story: story.id
 	}));
-
+	onCreateStory(story);
 	return [...state, story];
 }
