@@ -21,6 +21,13 @@ export const Routes: React.FC = () => {
 	// Otherwise we'd have to store the actual location somewhere, which will
 	// differ between web and Electron contexts.
 	const {isAuthenticated} = useAuth0();
+	const {user} = useAuth0();
+	if(user){
+		const{sub} = user;
+	}
+	else{
+		const sub = null;
+	}
 	console.log('isAuthenticated: ', isAuthenticated);
 
 	const {isLoading} = useAuth0();

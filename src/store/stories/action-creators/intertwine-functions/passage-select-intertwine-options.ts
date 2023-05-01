@@ -1,5 +1,6 @@
 import {Passage, StoriesState, Story, UpdatePassageAction} from "../../stories.types";
 import {Thunk} from "react-hook-thunk-reducer";
+import {useAuth0} from "@auth0/auth0-react";
 
 
 /**
@@ -25,7 +26,10 @@ export async function onSelectPassage(story: Story,
         if (isSelectSuccessResponse(responseObject)) {
           if (isPassage(responseObject.data)) {
             console.log(responseObject.data);
-            //passage.user = thisUserID;
+            const {user} = useAuth0();
+            // @ts-ignore
+            const {sub} = user;
+            passage.user = sub;
             passage.claimed = true;
             return (dispatch: (arg0: { type: string; passageId: string; props: Passage; storyId: string; }) => void) => {
               dispatch({
@@ -69,14 +73,6 @@ export async function onSelectPassage(story: Story,
         else {
           console.log("Error: bad response type.");
         }})
-  //logic for this:
-  //1: backend call
-  //2: wait for returned data from backend call
-  //3: IF returned object gives go-ahead, return true (can select)
-  //4: ELSE update the object, either because it has been deleted
-  //write delete clause
-  //   or claimed...
-  //write claim clause
   return true;
 }
 
@@ -92,8 +88,35 @@ export function onDeselectPassage(story: Story,
   passage.claimed = false;
   passage.user = "";
   console.log(JSON.stringify(passage));
+  fetch("http://localhost:3232/passages/" + passage.id,
+      {
+        method: 'PUT',
+        body: JSON.stringify(passage),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+  )
+  .then((response: Response) => response.json())
+  .then(
+      (responseObject: any) => {
+        if (isSuccessResponse(responseObject)) {
+          //all good!
+        }
+        else {
+          console.log("Handle error for deselection/update.");
+        }})
+}
+
+/**
+ * function to run when CREATING A NEW PASSAGE
+ * @param story
+ * @param passage
+ */
+export function onCreatePassage(passage: Passage){
+  console.log(JSON.stringify(passage));
   //appropriate backend call
-  fetch("http://localhost:3232/passages?id=" + JSON.stringify(passage),
+  fetch("http://localhost:3232/passages",
       {
         method: 'POST',
         body: JSON.stringify(passage),
@@ -105,21 +128,13 @@ export function onDeselectPassage(story: Story,
   .then((response: Response) => response.json())
   .then(
       (responseObject: any) => {
-        if (isSelectSuccessResponse(responseObject)) {
+        if (isSuccessResponse(responseObject)) {
           //all good!
         }
         else {
-          console.log("Handle error for ");
+          console.log("Handle error for creation.");
         }})
 
-}
-
-/**
- * function to run when CREATING A NEW PASSAGE
- * @param story
- * @param passage
- */
-export function onCreatePassage(passage: Passage, storyId: string){
 
 }
 
@@ -129,7 +144,23 @@ export function onCreatePassage(passage: Passage, storyId: string){
  * @param passage
  * @param exclusive
  */
-export function onDeletePassage(storyId: string, passageId: string){
+export function onDeletePassage(passageId: string){
+  //appropriate backend call
+  fetch("http://localhost:3232/passages/" + passageId,
+      {
+        method: 'DELETE',
+      }
+  )
+  .then((response: Response) => response.json())
+  .then(
+      (responseObject: any) => {
+        if (isSuccessResponse(responseObject)) {
+        }
+        else {
+          console.log("Handle error for deletion:");
+          console.log(responseObject);
+        }})
+
 
 }
 
@@ -179,6 +210,14 @@ function isSelectDeleteResponse(rjson: any): rjson is selectDeleteResponse {
   return false;
 }
 
+function isSuccessResponse(rjson: any): rjson is successResponse{
+  if (!("result" in rjson)) return false;
+  if (rjson["result"] === "success") {
+    return true;
+  }
+  return false;
+}
+
 
 /**
  * passage narrower :|
@@ -221,6 +260,10 @@ interface selectClaimedResponse{
 }
 
 interface selectDeleteResponse{
+  result: string;
+}
+
+interface successResponse{
   result: string;
 }
 
