@@ -1,6 +1,12 @@
 import {Passage, StoriesState, Story, UpdatePassageAction} from "../../stories.types";
 import {Thunk} from "react-hook-thunk-reducer";
 import {useAuth0} from "@auth0/auth0-react";
+import {updatePassage} from "../update-passage";
+import {useUndoableStoriesContext} from "../../../undoable-stories";
+import {deletePassage} from "../delete-passage";
+
+
+const {dispatch} = useUndoableStoriesContext();
 
 
 /**
@@ -10,7 +16,7 @@ import {useAuth0} from "@auth0/auth0-react";
  * @param exclusive
  */
 export async function onSelectPassage(story: Story,
-    passage: Passage):Promise<any>{
+    passage: Passage){
   fetch("http://localhost:3232/passages?id=" + passage.id,
       {
         method: 'GET',
@@ -30,14 +36,7 @@ export async function onSelectPassage(story: Story,
             const {sub} = user;
             passage.user = sub;
             passage.claimed = true;
-            return (dispatch: (arg0: { type: string; passageId: string; props: Passage; storyId: string; }) => void) => {
-              dispatch({
-                type: 'updatePassage',
-                passageId: passage.id,
-                props: responseObject.data,
-                storyId: story.id
-              });
-            }
+            dispatch(updatePassage(story, passage, responseObject.data));
           }
           else{
             console.log("Error: response was success, but data was malformed passage.")
@@ -46,14 +45,7 @@ export async function onSelectPassage(story: Story,
         else if (isSelectClaimedResponse(responseObject)) {
           if(isPassage(responseObject.data)) {
             console.log(responseObject.data);
-            return (dispatch: (arg0: { type: string; passageId: string; props: Passage; storyId: string; }) => void) => {
-              dispatch({
-                type: 'updatePassage',
-                passageId: passage.id,
-                props: responseObject.data,
-                storyId: story.id
-              });
-            }
+            dispatch(updatePassage(story, passage, responseObject.data));
           }
           else{
             console.log("Error: response was claimed, but data was malformed passage.")
@@ -61,19 +53,12 @@ export async function onSelectPassage(story: Story,
         }
         else if (isSelectDeleteResponse(responseObject)) {
           console.log(responseObject.result);
-          return (dispatch: (arg0: { type: string; passageId: string; storyId: string; }) => void) => {
-            dispatch({
-              type: 'deletePassage',
-              passageId: passage.id,
-              storyId: story.id
-            });
-          }
+          dispatch(deletePassage(story, passage));
         }
         else {
           console.log("Error: bad response type for selection.");
           console.log(responseObject);
         }})
-  return true;
 }
 
 /**
@@ -135,8 +120,6 @@ export function onCreatePassage(passage: Passage){
           console.log("Handle error for creation.");
           console.log(responseObject);
         }})
-
-
 }
 
 /**
@@ -149,6 +132,9 @@ export function onDeletePassage(passageId: string){
   //appropriate backend call
   fetch("http://localhost:3232/passages/" + passageId,
       {
+        headers: {
+          'Content-Type': 'application/json',
+        },
         method: 'DELETE',
       }
   )
@@ -161,8 +147,6 @@ export function onDeletePassage(passageId: string){
           console.log("Handle error for deletion:");
           console.log(responseObject);
         }})
-
-
 }
 
 //*** NARROWERS ***/
@@ -211,7 +195,7 @@ function isSelectDeleteResponse(rjson: any): rjson is selectDeleteResponse {
   return false;
 }
 
-function isSuccessResponse(rjson: any): rjson is successResponse{
+export function isSuccessResponse(rjson: any): rjson is successResponse{
   if (!("result" in rjson)) return false;
   if (rjson["result"] === "success") {
     return true;
@@ -264,7 +248,8 @@ interface selectDeleteResponse{
   result: string;
 }
 
-interface successResponse{
+export interface successResponse{
   result: string;
 }
+
 

@@ -9,3 +9,6 @@ docs/en/book/*
 /test-results/
 /playwright-report/
 /playwright/.cache/
+package.json
+package.json
+package-lock.json
