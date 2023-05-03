@@ -7,6 +7,7 @@ import {
 	Story,
 	useStoriesContext
 } from '../../../../store/stories';
+import {useAuth0} from "@auth0/auth0-react";
 
 export interface SelectAllPassagesButtonProps {
 	story: Story;
@@ -15,13 +16,16 @@ export interface SelectAllPassagesButtonProps {
 export const SelectAllPassagesButton: React.FC<SelectAllPassagesButtonProps> = props => {
 	const {story} = props;
 	const {dispatch} = useStoriesContext();
+	const {user} = useAuth0();
+	//@ts-ignore
+	const {sub} = user;
 	const {t} = useTranslation();
 
 	return (
 		<IconButton
 			icon={<IconMarquee />}
 			label={t('common.selectAll')}
-			onClick={() => dispatch(selectAllPassages(story))}
+			onClick={() => dispatch(selectAllPassages(story, sub))}
 		/>
 	);
 };

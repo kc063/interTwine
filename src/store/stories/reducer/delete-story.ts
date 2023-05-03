@@ -9,7 +9,6 @@ export function deleteStory(state: StoriesState, storyId: string) {
 			onDeleteStory(storyId);
 			return false;
 		}
-    onDeleteStory(storyId);
 		return true;
 	});
 

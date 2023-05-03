@@ -8,13 +8,16 @@ import {
 	UpdatePassagesAction
 } from '../stories.types';
 import {onDeselectPassage, onSelectPassage} from "./intertwine-functions";
+import {StoriesActionOrThunk} from "../../undoable-stories";
+import {Dispatch} from "react";
 
 /**
  * Deselects all passages.
  */
 export function deselectAllPassages(
-	story: Story
-): Thunk<StoriesState, UpdatePassagesAction> {
+	story: Story,
+	user: string,
+	d: Thunk<StoriesState, UpdatePassageAction>): Thunk<StoriesState, UpdatePassagesAction> {
 	return dispatch => {
 		const passageUpdates: Record<string, Partial<Passage>> = {};
 
@@ -22,7 +25,7 @@ export function deselectAllPassages(
 			if (passage.selected) {
 				passageUpdates[passage.id] = {selected: false};
 				console.log("deselected");
-				onDeselectPassage(story, passage);
+				onDeselectPassage(story, passage, user);
 			}
 		});
 
@@ -40,9 +43,9 @@ export function deselectAllPassages(
  * Deselects a single passage.
  */
 export function deselectPassage(
-	story: Story,
-	passage: Passage
-): Thunk<StoriesState, UpdatePassageAction> {
+		story: Story,
+		passage: Passage,
+		user: string): Thunk<StoriesState, UpdatePassageAction> {
 	if (passage.story !== story.id) {
 		throw new Error('This passage does not belong to this story');
 	}
@@ -56,7 +59,7 @@ export function deselectPassage(
 				storyId: story.id
 			});
 			console.log("deselected");
-			onDeselectPassage(story, passage);}
+			onDeselectPassage(story, passage, user);}
 	};
 }
 
@@ -64,7 +67,8 @@ export function deselectPassage(
  * Selects all passages.
  */
 export function selectAllPassages(
-	story: Story
+	story: Story,
+	user: string
 ): Thunk<StoriesState, UpdatePassagesAction> {
 	return dispatch => {
 		const passageUpdates: Record<string, Partial<Passage>> = {};
@@ -73,7 +77,7 @@ export function selectAllPassages(
 			if (!passage.selected) {
 				passageUpdates[passage.id] = {selected: true};
 				console.log("selected");
-				onSelectPassage(story, passage);
+				onSelectPassage(story, passage, user);
 			}
 		});
 
@@ -93,8 +97,8 @@ export function selectAllPassages(
 export function selectPassage(
 	story: Story,
 	passage: Passage,
-	exclusive: boolean
-): Thunk<StoriesState, UpdatePassagesAction> {
+	exclusive: boolean,
+	user: string): Thunk<StoriesState, UpdatePassagesAction> {
 	if (passage.story !== story.id) {
 		throw new Error('This passage does not belong to this story');
 	}
@@ -104,7 +108,7 @@ export function selectPassage(
 
 		if (!passage.selected) {
 			passageUpdates[passage.id] = {selected: true};
-			onSelectPassage(story, passage);
+			onSelectPassage(story, passage, user);
 			console.log("selected");
 		}
 
@@ -112,9 +116,8 @@ export function selectPassage(
 			story.passages.forEach(p => {
 				if (p.id !== passage.id && p.selected) {
 					passageUpdates[p.id] = {selected: false};
-					onDeselectPassage(story, passage);
+					onDeselectPassage(story, passage, user);
 					console.log("deselected");
-					console.log(passage);
 				}
 			});
 		}
@@ -128,6 +131,8 @@ export function selectPassage(
 export function selectPassagesInRect(
 	story: Story,
 	rect: Rect,
+	user: String,
+	dispatch: (actionOrThunk: StoriesActionOrThunk, annotation?: string) => void,
 	ignoreIds: string[] = []
 ): Thunk<StoriesState, UpdatePassagesAction> {
 	return dispatch => {
@@ -147,7 +152,7 @@ export function selectPassagesInRect(
 			 */
 			if (passage.selected !== selected) {
 				passageUpdates[passage.id] = {selected};
-				onDeselectPassage(story, passage);
+				onDeselectPassage(story, passage, user);
 				console.log("deselected");
 			}
 		});

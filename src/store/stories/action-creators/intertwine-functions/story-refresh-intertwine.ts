@@ -11,12 +11,10 @@ import {useUndoableStoriesContext} from "../../../undoable-stories";
 import {deleteStory} from "../delete-story";
 
 
-const {dispatch, stories} = useUndoableStoriesContext();
-
 export function onCreateStory(story: Story){
   console.log(JSON.stringify(story));
   //appropriate backend call
-  fetch("http://localhost:3232/story",
+  fetch("http://localhost:3232/stories",
       {
         method: 'POST',
         body: JSON.stringify(story),
@@ -42,7 +40,7 @@ export function onCreateStory(story: Story){
 
 export function onDeleteStory(storyId: string){
   //appropriate backend call
-  fetch("http://localhost:3232/story/" + storyId,
+  fetch("http://localhost:3232/stories/" + storyId,
       {
         headers: {
           'Content-Type': 'application/json',

@@ -10,6 +10,7 @@ import {
 } from '../../store/stories';
 import {useUndoableStoriesContext} from '../../store/undoable-stories';
 import {Point, Rect} from '../../util/geometry';
+import {useAuth0} from "@auth0/auth0-react";
 
 export function usePassageChangeHandlers(story: Story) {
 	const selectedPassages = React.useMemo(
@@ -18,10 +19,14 @@ export function usePassageChangeHandlers(story: Story) {
 	);
 	const {dispatch: undoableStoriesDispatch} = useUndoableStoriesContext();
 	const {dispatch: dialogsDispatch} = useDialogsContext();
+	const {user} = useAuth0();
+	//@ts-ignore
+	let {sub} = user.sub;
+	sub = sub+"";
 
 	const handleDeselectPassage = React.useCallback(
 		(passage: Passage) =>
-			undoableStoriesDispatch(deselectPassage(story, passage)),
+			undoableStoriesDispatch(deselectPassage(story, passage, sub)),
 		[story, undoableStoriesDispatch]
 	);
 
@@ -61,7 +66,7 @@ export function usePassageChangeHandlers(story: Story) {
 
 	const handleSelectPassage = React.useCallback(
 		(passage: Passage, exclusive: boolean) =>
-			undoableStoriesDispatch(selectPassage(story, passage, exclusive)),
+			undoableStoriesDispatch(selectPassage(story, passage, exclusive, sub)),
 		[story, undoableStoriesDispatch]
 	);
 
@@ -81,7 +86,10 @@ export function usePassageChangeHandlers(story: Story) {
 				selectPassagesInRect(
 					story,
 					logicalRect,
-					additive ? selectedPassages.map(passage => passage.id) : []
+						sub,
+						undoableStoriesDispatch,
+						additive ? selectedPassages.map(passage => passage.id) : [],
+
 				)
 			);
 		},

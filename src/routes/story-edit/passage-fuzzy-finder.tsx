@@ -1,3 +1,4 @@
+import { useAuth0 } from '@auth0/auth0-react';
 import {debounce} from 'lodash';
 import * as React from 'react';
 import {useHotkeys} from 'react-hotkeys-hook';
@@ -22,6 +23,9 @@ export interface PassageFuzzyFinderProps {
 
 export const PassageFuzzyFinder: React.FC<PassageFuzzyFinderProps> = props => {
 	const {onClose, onOpen, open, setCenter, story} = props;
+	const {user} = useAuth0();
+	//@ts-ignore
+	const {sub} = user;
 	const {dispatch} = useStoriesContext();
 	const [search, setSearch] = React.useState('');
 	const [debouncedSearch, setDebouncedSearch] = React.useState('');
@@ -58,7 +62,7 @@ export const PassageFuzzyFinder: React.FC<PassageFuzzyFinderProps> = props => {
 
 	function handleSelectResult(index: number) {
 		setCenter(matches[index]);
-		dispatch(selectPassage(story, matches[index], true));
+		dispatch(selectPassage(story, matches[index], true, sub));
 		setSearch('');
 		onClose();
 	}

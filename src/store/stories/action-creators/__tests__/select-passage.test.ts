@@ -59,7 +59,7 @@ describe('deselectPassage', () => {
 
 	it("returns a thunk that deselects a passage if it's selected", () => {
 		story.passages[0].selected = true;
-		deselectPassage(story, story.passages[0])(dispatch, () => [story]);
+		deselectPassage(story, story.passages[0], sub, undoableStoriesDispatch)(dispatch, () => [story]);
 		expect(dispatch.mock.calls).toEqual([
 			[
 				{
@@ -76,14 +76,14 @@ describe('deselectPassage', () => {
 		const dispatch = jest.fn();
 
 		story.passages[0].selected = false;
-		deselectPassage(story, story.passages[0])(dispatch, () => [story]);
+		deselectPassage(story, story.passages[0], sub, undoableStoriesDispatch)(dispatch, () => [story]);
 		expect(dispatch).not.toHaveBeenCalled();
 	});
 
 	it('throws an error if the passage does not belong to the story', () => {
 		story.passages[0].story = 'bad';
 
-		expect(() => deselectPassage(story, story.passages[0])).toThrow();
+		expect(() => deselectPassage(story, story.passages[0], sub, undoableStoriesDispatch)).toThrow();
 	});
 });
 

@@ -21,6 +21,7 @@ export function deletePassage(
 			passages: story.passages.filter(passage => {
 				if (passage.id === passageId) {
 					deleted = true;
+					onDeletePassage(story, passageId);
 					return false;
 				}
 
@@ -32,7 +33,6 @@ export function deletePassage(
 			newStory.lastUpdate = new Date();
 			return newStory;
 		}
-
 		return story;
 	});
 
@@ -47,6 +47,5 @@ export function deletePassage(
 		);
 		return state;
 	}
-	onDeletePassage(passageId);
 	return newState;
 }
