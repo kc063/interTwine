@@ -36,9 +36,10 @@ export async function onSelectPassage(story: Story,
           responseObject.data = JSON.parse(responseObject.data);
           console.log(responseObject.data);
           if(isPassage(responseObject.data)) {
+            updatePassage(story, passage, responseObject.data);
             passage.user = user;
             passage.claimed = true;
-            updatePassage(story, passage, responseObject.data);
+            putter(story, passage);
           }
           else{
             console.log("Malformed passage data.")
@@ -69,9 +70,13 @@ export async function onSelectPassage(story: Story,
  * @param passage
  */
 export function onDeselectPassage(story: Story,
-                                  passage: Passage, user: String){
+                                  passage: Passage, user: string) {
   passage.claimed = false;
   passage.user = "";
+  putter(story, passage);
+}
+
+export function putter(story: Story, passage: Passage){
   console.log(JSON.stringify(passage));
   fetch("http://localhost:3232/passages/" + passage.id,
       {
@@ -89,7 +94,7 @@ export function onDeselectPassage(story: Story,
           //all good!
         }
         else {
-          console.log("Handle error for deselection/update.");
+          console.log("Handle error for update.");
           console.log(responseObject);
         }})
 }
@@ -215,7 +220,7 @@ export function isSuccessResponse(rjson: any): rjson is successResponse{
  * @param rjson the json to check
  * @returns whether the format is that of a successful response
  */
-function isPassage(rjson: any): rjson is Passage {
+export function isPassage(rjson: any): rjson is Passage {
   if (!('height' in rjson)) return false;
   if (!('highlighted' in rjson)) return false;
   if (!('id' in rjson)) return false;

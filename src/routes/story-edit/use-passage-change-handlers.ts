@@ -21,8 +21,7 @@ export function usePassageChangeHandlers(story: Story) {
 	const {dispatch: dialogsDispatch} = useDialogsContext();
 	const {user} = useAuth0();
 	//@ts-ignore
-	let {sub} = user.sub;
-	sub = sub+"";
+	const {sub} = user;
 
 	const handleDeselectPassage = React.useCallback(
 		(passage: Passage) =>
@@ -87,7 +86,6 @@ export function usePassageChangeHandlers(story: Story) {
 					story,
 					logicalRect,
 						sub,
-						undoableStoriesDispatch,
 						additive ? selectedPassages.map(passage => passage.id) : [],
 
 				)

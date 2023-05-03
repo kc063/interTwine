@@ -99,6 +99,7 @@ export function selectPassage(
 	passage: Passage,
 	exclusive: boolean,
 	user: string): Thunk<StoriesState, UpdatePassagesAction> {
+	console.log(user);
 	if (passage.story !== story.id) {
 		throw new Error('This passage does not belong to this story');
 	}
@@ -131,9 +132,7 @@ export function selectPassage(
 export function selectPassagesInRect(
 	story: Story,
 	rect: Rect,
-	user: String,
-	dispatch: (actionOrThunk: StoriesActionOrThunk, annotation?: string) => void,
-	ignoreIds: string[] = []
+	user: string, ignoreIds: string[] = []
 ): Thunk<StoriesState, UpdatePassagesAction> {
 	return dispatch => {
 		const passageUpdates: Record<string, Partial<Passage>> = {};
