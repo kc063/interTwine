@@ -14,7 +14,7 @@ export function useLocalStoragePersistence() {
 			},
 			stories: {
 				load: stories.load,
-				//load: libload(),
+				//load: libload(sub),
 				saveMiddleware: stories.saveMiddleware
 			},
 			storyFormats: {

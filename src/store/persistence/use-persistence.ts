@@ -5,6 +5,7 @@ import {isElectronRenderer} from '../../util/is-electron';
 import {StoriesAction, StoriesState} from '../stories';
 import {StoryFormatsAction, StoryFormatsState} from '../story-formats';
 import {PrefsAction, PrefsState} from '../prefs';
+import {User} from "@auth0/auth0-react";
 
 export interface PersistenceHooks {
 	prefs: {

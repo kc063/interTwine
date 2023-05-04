@@ -79,7 +79,6 @@ export function usePassageChangeHandlers(story: Story) {
 				top: rect.top / story.zoom,
 				width: rect.width / story.zoom
 			};
-
 			// This should not be undoable.
 			undoableStoriesDispatch(
 				selectPassagesInRect(

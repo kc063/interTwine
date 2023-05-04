@@ -4,11 +4,7 @@ import {ownerUpdateFunction} from "./owner-update-intertwine";
 import {isSuccessResponse} from "./passage-select-intertwine-options";
 import {isPassage} from "./passage-select-intertwine-options";
 
-export function libload(){
-
-}
-
-export function fakelibload(userId: string): Story[]{
+export function libload(userId: string): Story[]{
   fetch("http://localhost:3232/libraryload/" + userId,
       {
         method: 'GET',

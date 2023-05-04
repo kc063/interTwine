@@ -5,8 +5,12 @@ import {usePrefsContext} from './prefs';
 import {useStoriesContext} from './stories';
 import {useStoryFormatsContext} from './story-formats';
 import {useStoriesRepair} from './use-stories-repair';
+import {useAuth0} from "@auth0/auth0-react";
 
 export const StateLoader: React.FC = ({children}) => {
+	//const {user} = useAuth0();
+	// @ts-ignore
+	//const {sub} = user;
 	const [initing, setIniting] = React.useState(false);
 	const [inited, setInited] = React.useState(false);
 	const [prefsRepaired, setPrefsRepaired] = React.useState(false);

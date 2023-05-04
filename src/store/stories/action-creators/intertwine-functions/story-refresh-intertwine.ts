@@ -62,7 +62,7 @@ export function onDeleteStory(storyId: string){
 //gotta make some new types lol
 /*
 export function refreshStory(story: Story){
-  fetch("http://localhost:3232/passages?id=" + story.id,
+  fetch("http://localhost:3232/stories/" + story.id,
       {
         method: 'GET',
         headers: {
