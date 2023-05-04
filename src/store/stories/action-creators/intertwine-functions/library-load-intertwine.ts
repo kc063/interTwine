@@ -4,30 +4,32 @@ import {ownerUpdateFunction} from "./owner-update-intertwine";
 import {isSuccessResponse} from "./passage-select-intertwine-options";
 import {isPassage} from "./passage-select-intertwine-options";
 
-export function libload(userId: string): Story[]{
-  fetch("http://localhost:3232/libraryload/" + userId,
-      {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-  )
-  .then((response: Response) => response.json())
-  .then(
-      (responseObject: any) => {
-        let stories: Story[] = [];
-        if ((issuccessStoryLoadResponse(responseObject))) {
-          for (let i = 0; i < responseObject.data.length; i++){
-            stories.push(responseObject.data[i]);
-          }
-          return stories;
+export function libload(userId: string | undefined): Story[]{
+  if(!(userId === undefined)){
+    fetch("http://localhost:3232/libraryload/" + userId,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
         }
-        else {
-          console.log("Handle error for creation.");
-          console.log(responseObject);
-          return [];
-        }})
+    )
+    .then((response: Response) => response.json())
+    .then(
+        (responseObject: any) => {
+          let stories: Story[] = [];
+          if ((issuccessStoryLoadResponse(responseObject))) {
+            for (let i = 0; i < responseObject.data.length; i++) {
+              stories.push(responseObject.data[i]);
+            }
+            return stories;
+          } else {
+            console.log("Handle error for creation.");
+            console.log(responseObject);
+            return [];
+          }
+        })
+  }
   return [];
 }
 

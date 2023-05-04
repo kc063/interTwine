@@ -23,23 +23,19 @@ export const Routes: React.FC = () => {
 	// differ between web and Electron contexts.
 	const {isAuthenticated} = useAuth0();
 	const {user} = useAuth0();
-	if (user) {
-		const {sub} = user;
-	} else {
-		const sub = null;
-	}
+	// @ts-ignore
 	console.log('isAuthenticated: ', isAuthenticated);
+
+	React.useEffect(() => {
+		if (isAuthenticated) {
+			libload(user?.sub);
+		}
+	}, [isAuthenticated]);
 
 	const {isLoading} = useAuth0();
 	if (isLoading) {
 		return <Loading />;
 	}
-
-	React.useEffect(() => {
-		if (isAuthenticated) {
-			libload(sub);
-		}
-	}, [isAuthenticated]);
 
 	return (
 		<HashRouter>
