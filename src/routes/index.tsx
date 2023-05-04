@@ -12,6 +12,7 @@ import {useHistory} from 'react-router-dom';
 import {Auth0Provider, useAuth0} from '@auth0/auth0-react';
 import {ProfileRoute} from './profile/profile-route';
 import Loading from '../components/loading';
+import {libload} from '../store/stories/action-creators/intertwine-functions';
 
 export const Routes: React.FC = () => {
 	const {prefs} = usePrefsContext();
@@ -22,10 +23,9 @@ export const Routes: React.FC = () => {
 	// differ between web and Electron contexts.
 	const {isAuthenticated} = useAuth0();
 	const {user} = useAuth0();
-	if(user){
-		const{sub} = user;
-	}
-	else{
+	if (user) {
+		const {sub} = user;
+	} else {
 		const sub = null;
 	}
 	console.log('isAuthenticated: ', isAuthenticated);
@@ -34,6 +34,12 @@ export const Routes: React.FC = () => {
 	if (isLoading) {
 		return <Loading />;
 	}
+
+	React.useEffect(() => {
+		if (isAuthenticated) {
+			libload(sub);
+		}
+	}, [isAuthenticated]);
 
 	return (
 		<HashRouter>
