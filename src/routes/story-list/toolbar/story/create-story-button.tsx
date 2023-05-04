@@ -10,6 +10,7 @@ import {
 } from '../../../../store/stories';
 import {PromptButton} from '../../../../components/control/prompt-button';
 import {unusedName} from '../../../../util/unused-name';
+import {useAuth0} from "@auth0/auth0-react";
 
 export const CreateStoryButton: React.FC = () => {
 	const {dispatch, stories} = useStoriesContext();
@@ -22,6 +23,9 @@ export const CreateStoryButton: React.FC = () => {
 	const history = useHistory();
 	const {prefs} = usePrefsContext();
 	const {t} = useTranslation();
+	const {user} = useAuth0();
+	// @ts-ignore
+	const {sub} = user;
 
 	function validateName(value: string) {
 		if (value.trim() === '') {
@@ -44,7 +48,7 @@ export const CreateStoryButton: React.FC = () => {
 	}
 
 	function handleSubmit() {
-		const id = createStory(stories, prefs, {name: newName})(
+		const id = createStory(stories, prefs, {name: newName, owner: sub, editors: [sub]})(
 			dispatch,
 			() => stories
 		);
