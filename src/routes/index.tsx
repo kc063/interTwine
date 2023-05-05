@@ -12,7 +12,7 @@ import {useHistory} from 'react-router-dom';
 import {Auth0Provider, useAuth0} from '@auth0/auth0-react';
 import {ProfileRoute} from './profile/profile-route';
 import Loading from '../components/loading';
-import {getStore, libload} from '../store/stories/action-creators/intertwine-functions';
+import {getStore} from '../store/stories/action-creators/intertwine-functions';
 import {createStory, useStoriesContext} from "../store/stories";
 
 export const Routes: React.FC = () => {
@@ -32,7 +32,10 @@ export const Routes: React.FC = () => {
 		if (isAuthenticated) {
 			console.log("library load 1: ");
 			const fetchLib = async () => {
-				await libload(user?.sub, stat).then(data => data(dispatch, () => stories));
+				await getStore(user?.sub, dispatch).then(data => {
+						console.log(data);
+						data(dispatch, () => stories);
+				})
 			}
 			fetchLib().catch(console.error);
 		}

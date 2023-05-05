@@ -49,7 +49,7 @@ export const StoryCard: React.FC<StoryCardProps> = props => {
 							<h2>{story.name}</h2>
 							<p>
 								{t('components.storyCard.lastUpdated', {
-									date: dateFormatter.format(story.lastUpdate)
+									//date: dateFormatter.format(story.lastUpdate)
 								})}
 								<br />
 								{t('components.storyCard.passageCount', {
