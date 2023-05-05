@@ -9,7 +9,7 @@ import {StoriesAction, StoriesState, Story} from '../stories.types';
 export function createStory(
 	stories: Story[],
 	prefs: PrefsState,
-	props: Partial<Omit<Story, 'id'>> & Pick<Story, 'name'>
+	props: Partial<Omit<Story, 'id'>> & Pick<Story, 'name'>& Pick<Story, 'owner'>&Pick<Story, 'editors'>
 ): Thunk<StoriesState, StoriesAction> {
 	const id = uuid();
 

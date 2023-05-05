@@ -148,6 +148,11 @@ export interface InitStoriesAction {
 	state: Story[];
 }
 
+export interface AuthStoriesAction {
+	type: 'init';
+	state: Story[];
+}
+
 export interface RepairStoriesAction {
 	type: 'repair';
 	allFormats: StoryFormat[];
@@ -209,6 +214,7 @@ export interface DeletePassagesAction {
 
 export type StoriesAction =
 	| InitStoriesAction
+		| AuthStoriesAction
 	| RepairStoriesAction
 	| CreateStoryAction
 	| UpdateStoryAction
