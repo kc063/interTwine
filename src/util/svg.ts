@@ -8,7 +8,6 @@ export interface ArcProps {
 	start: Point;
 	sweep?: boolean;
 }
-
 /**
  * Returns an SVG path string between two points.
  * @see https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths#arcs

@@ -32,10 +32,7 @@ export const Routes: React.FC = () => {
 		if (isAuthenticated) {
 			console.log("library load 1: ");
 			const fetchLib = async () => {
-				await getStore(user?.sub, dispatch).then(data => {
-						console.log(data);
-						data(dispatch, () => stories);
-				})
+				await getStore(user?.sub, dispatch);
 			}
 			fetchLib().catch(console.error);
 		}
