@@ -13,6 +13,7 @@ import {IconButton} from '../../control/icon-button';
 import './dialog-card.css';
 import useErrorBoundary from 'use-error-boundary';
 import {ErrorMessage} from '../../error';
+import {Story} from '../../../store/stories';
 
 export interface DialogCardProps {
 	className?: string;
@@ -22,6 +23,7 @@ export interface DialogCardProps {
 	highlighted?: boolean;
 	maximizable?: boolean;
 	maximized?: boolean;
+	story?: Story | undefined;
 	onChangeCollapsed: (value: boolean) => void;
 	onChangeHighlighted: (value: boolean) => void;
 	onChangeMaximized: (value: boolean) => void;
