@@ -36,9 +36,9 @@ export async function onSelectPassage(story: Story,
           responseObject.data = JSON.parse(responseObject.data);
           console.log(responseObject.data);
           if(isPassage(responseObject.data)) {
-            updatePassage(story, passage, responseObject.data);
             passage.user = user;
             passage.claimed = true;
+            updatePassage(story, passage, responseObject.data);
             putter(story, passage);
           }
           else{

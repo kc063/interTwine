@@ -134,7 +134,7 @@ export interface Story {
 	 */
 	owner: string;
 	/**
-	 * People who are allowed to edit the story.
+	 * People who are allowed to edit the story (AUTH0 SUB).
 	 */
 	editors: string[];
 }

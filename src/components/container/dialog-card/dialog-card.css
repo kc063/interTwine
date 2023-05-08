@@ -2,6 +2,36 @@
 @import '../../../styles/typography.css';
 @import '../../../styles/metrics.css';
 
+div.scroll {
+	/* margin: 4px, 4px;
+	padding: 4px; */
+	background-color: grey;
+	width: 600px;
+	height: 110px;
+	overflow-x: auto;
+	overflow-y: auto;
+	text-align: justify;
+}
+
+input.emailbox {
+	/* margin: 4px, 4px;
+	padding: 4px; */
+	/* background-color: grey; */
+	width: 500px;
+	/* height: 110px; */
+	display: block;
+	margin: 0 auto;
+	overflow-x: auto;
+	overflow-y: auto;
+	text-align: justify;
+}
+
+ul.no-bullets {
+	list-style-type: none; /* Remove bullets */
+	padding: 0; /* Remove padding */
+	margin: 0; /* Remove margins */
+}
+
 .dialog-card {
 	height: 100%;
 	width: 100%;
