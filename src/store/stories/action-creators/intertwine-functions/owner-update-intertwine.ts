@@ -5,13 +5,11 @@
 import {Story} from "../../stories.types";
 import {isSuccessResponse} from "./passage-select-intertwine-options";
 
-/** functions necessary:
- * find and replace (generally figure out how to handle find and replace)
- * rename
- * details (update story type)
- * passage tags
- * javascript
- * stylesheet
+/**
+ * Multipurpose function that encapsulates ALL owner updates-- things we only want the owner
+ * to be able to do. For now, everyone can do it, though! Essentially this is the "story update"
+ * function for when the entire story is updated.
+ * @param story
  */
 
 export function ownerUpdateFunction(story: Story){
@@ -31,7 +29,7 @@ export function ownerUpdateFunction(story: Story){
         if (isSuccessResponse(responseObject)) {
         }
         else {
-          console.log("Handle error for story update.");
+          console.log("Handle error for story update:");
           console.log(responseObject);
         }})
 

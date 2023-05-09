@@ -1,12 +1,12 @@
 import uuid from 'tiny-uuid';
 import {passageDefaults} from '../defaults';
 import {Passage, Story, StoriesState} from '../stories.types';
-import {onCreatePassage} from "../action-creators/intertwine-functions";
+import {onCreatePassage} from '../action-creators/intertwine-functions';
 
 export function createPassage(
-	state: StoriesState,
-	storyId: string,
-	passageProps: Partial<Passage>
+		state: StoriesState,
+		storyId: string,
+		passageProps: Partial<Passage>
 ) {
 	let storyExists = false;
 	let created = false;
@@ -19,17 +19,17 @@ export function createPassage(
 
 		if (story.passages.some(passage => passage.id === passageProps.id)) {
 			console.warn(
-				`There is already a passage in this story with ID "${passageProps.id}", taking no action`
+					`There is already a passage in this story with ID "${passageProps.id}", taking no action`
 			);
 			return story;
 		}
 
 		if (
-			'name' in passageProps &&
-			story.passages.some(passage => passage.name === passageProps.name)
+				'name' in passageProps &&
+				story.passages.some(passage => passage.name === passageProps.name)
 		) {
 			console.warn(
-				`There is already a passage in this story with name "${passageProps.name}", taking no action`
+					`There is already a passage in this story with name "${passageProps.name}", taking no action`
 			);
 			return story;
 		}
@@ -49,7 +49,10 @@ export function createPassage(
 		if (newStory.passages.length === 1) {
 			newStory.startPassage = newPassage.id;
 		}
-		onCreatePassage(story, newPassage);
+		console.log(
+				'calling onCreatePassage!\n passing story:' + JSON.stringify(story)
+		);
+		onCreatePassage(newStory, newPassage);
 
 		created = true;
 		return newStory;

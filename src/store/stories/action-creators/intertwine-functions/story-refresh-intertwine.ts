@@ -1,5 +1,5 @@
 /**
- * variety of functions specifically for adding/removing editors
+ * variety of functions specifically for adding/removing stories
  */
 import {Passage, StoriesDispatch, Story, TagColors} from "../../stories.types";
 import {isSuccessResponse} from "./passage-select-intertwine-options";
@@ -11,6 +11,10 @@ import {useUndoableStoriesContext} from "../../../undoable-stories";
 import {deleteStory} from "../delete-story";
 
 
+/**
+ * Function for creating stories.
+ * @param story
+ */
 export function onCreateStory(story: Story){
   console.log(JSON.stringify(story));
   //appropriate backend call
@@ -28,9 +32,10 @@ export function onCreateStory(story: Story){
       (responseObject: any) => {
         if (isSuccessResponse(responseObject)) {
           //all good!
+          //leaving this here for debug reasons/potential future implementations of code.
         }
         else {
-          console.log("Handle error for creation.");
+          console.log("Handle error for creation:");
           console.log(responseObject);
         }})
 
@@ -38,6 +43,10 @@ export function onCreateStory(story: Story){
 
 }
 
+/**
+ * function for DELETING stories.
+ * @param storyId
+ */
 export function onDeleteStory(storyId: string){
   //appropriate backend call
   fetch("http://localhost:3232/stories/" + storyId,
@@ -52,6 +61,8 @@ export function onDeleteStory(storyId: string){
   .then(
       (responseObject: any) => {
         if (isSuccessResponse(responseObject)) {
+          //all good!
+          //leaving this here for debug reasons/potential future implementations of code.
         }
         else {
           console.log("Handle error for deletion:");
@@ -59,35 +70,47 @@ export function onDeleteStory(storyId: string){
         }})
 }
 
-//gotta make some new types lol
+/**
+ * Function for REFRESHING the story. This updates the story on the frontend, unlike the others,
+ * which simply call the backend to update what's there.
+ * @param story: the story we want to update. Can be undefined!
+ * @param stories: all our stories, as gathered from the component we call this in.
+ * @param dispatch: a dispatch used to update stories.
+ */
+export function refreshStory(story: Story | undefined, stories: Story[], dispatch: StoriesDispatch) {
+  if(!story) {
+    console.log("Null story.");
 
-export function refreshStory(story: Story, stories: Story[], dispatch: StoriesDispatch) {
-  fetch("http://localhost:3232/stories/" + story.id,
-      {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-  )
-  .then((response: Response) => response.json())
-  .then(
-      (responseObject: any) => {
-        if (isStoryLoadResponse(responseObject)) {
-          if (isStory(responseObject.data)) {
-            console.log(responseObject.data);
-            dispatch(updateStory(stories, story, responseObject.data));
-          } else {
-            console.log("Error: response was success, but data was malformed passage.")
-          }
-        } else if (isDeleteResponse(responseObject)) {
-          console.log(responseObject.result);
-          dispatch(deleteStory(story));
-        } else {
-          console.log("Error: bad response type for selection.");
-          console.log(responseObject);
+  }
+  else {
+    fetch("http://localhost:3232/stories?id=" + story.id,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
         }
-      })
+    )
+    .then((response: Response) => response.json())
+    .then(
+        (responseObject: any) => {
+          if (isStoryLoadResponse(responseObject)) {
+            if (isStory(responseObject.data)) {
+              console.log(responseObject.data);
+              dispatch(updateStory(stories, story, responseObject.data));
+            } else {
+              console.log("Error: response was success, but data was malformed passage.")
+            }
+          } else if (isDeleteResponse(responseObject)) {
+            console.log("Story has been deleted on backend.");
+            console.log(responseObject.result);
+            dispatch(deleteStory(story));
+          } else {
+            console.log("Error: bad response type.");
+            console.log(responseObject);
+          }
+        })
+  }
 }
 
 
@@ -143,10 +166,16 @@ export function isStory(rjson: any): rjson is Story {
   return true;
 }
 
+/**
+ * type for when a deletion has been returned from the back.
+ */
 export interface deleteResponse{
   result: string;
 }
 
+/**
+ * type for when a story is being loaded.
+ */
 export interface storyLoadResponse {
   result: string;
   data: Story;

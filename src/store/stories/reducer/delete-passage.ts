@@ -1,10 +1,10 @@
 import {StoriesState} from '../stories.types';
-import {onDeletePassage} from "../action-creators/intertwine-functions";
+import {onDeletePassage} from '../action-creators/intertwine-functions';
 
 export function deletePassage(
-	state: StoriesState,
-	storyId: string,
-	passageId: string
+		state: StoriesState,
+		storyId: string,
+		passageId: string
 ) {
 	let foundStory = false;
 	let deleted = false;
@@ -21,13 +21,13 @@ export function deletePassage(
 			passages: story.passages.filter(passage => {
 				if (passage.id === passageId) {
 					deleted = true;
-					onDeletePassage(story, passageId);
 					return false;
 				}
 
 				return true;
 			})
 		};
+		onDeletePassage(newStory, passageId);
 
 		if (deleted) {
 			newStory.lastUpdate = new Date();
@@ -43,7 +43,7 @@ export function deletePassage(
 
 	if (!deleted) {
 		console.warn(
-			`Asked to delete a passage with ID "${passageId}", but it does not exist in story ID ${storyId}, taking no action`
+				`Asked to delete a passage with ID "${passageId}", but it does not exist in story ID ${storyId}, taking no action`
 		);
 		return state;
 	}

@@ -76,6 +76,11 @@ export function onDeselectPassage(story: Story,
   putter(story, passage);
 }
 
+/**
+ * "putting" function for updates, used for deselect as well as other updaters.
+ * @param story
+ * @param passage
+ */
 export function putter(story: Story, passage: Passage){
   console.log(JSON.stringify(passage));
   fetch("http://localhost:3232/passages/" + passage.id,
@@ -189,7 +194,7 @@ function isSelectClaimedResponse(rjson: any): rjson is selectClaimedResponse {
 }
 
 /**
- * Returns if select response is claimed.
+ * Returns if select response is deletion.
  * @param rjson the json to check
  * @returns whether the format is that of a claim response.
  */
@@ -201,6 +206,10 @@ function isSelectDeleteResponse(rjson: any): rjson is selectDeleteResponse {
   return false;
 }
 
+/**
+ * response for if passage can be successfully selected!
+ * @param rjson
+ */
 export function isSuccessResponse(rjson: any): rjson is successResponse{
   if (!("result" in rjson)) return false;
   if (rjson["result"] === "success") {
@@ -209,10 +218,6 @@ export function isSuccessResponse(rjson: any): rjson is successResponse{
   return false;
 }
 
-
-/**
- * passage narrower :|
- */
 /**
  * Returns whether rjson matches the json format of the expected redlining
  * server success response.
@@ -238,22 +243,31 @@ export function isPassage(rjson: any): rjson is Passage {
 }
 
 /**
- * interface for having pins
+ * interface for success response on select
  */
 interface selectSuccessResponse{
   result: string;
   data: any;
 }
 
+/**
+ * interface for claimed response on select
+ */
 interface selectClaimedResponse{
   result: string;
   data: Passage;
 }
 
+/**
+ * interface for deleted response on select
+ */
 interface selectDeleteResponse{
   result: string;
 }
 
+/**
+ * interface for success response, more generally
+ */
 export interface successResponse{
   result: string;
 }

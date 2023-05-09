@@ -37,7 +37,7 @@ export const ViewEditors: React.FC<DialogComponentProps> = props => {
 		Object.assign(allEditors, props.story?.editors);
 		console.log(allEditors);
 		// @ts-ignore
-		await ownerUpdateFunction(props.story);
+		ownerUpdateFunction(props.story);
 	}, [allEditors]);
 
 	return (

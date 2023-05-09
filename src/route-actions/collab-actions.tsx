@@ -11,9 +11,10 @@ import {ButtonBar} from '../components/container/button-bar';
 import {CardContent} from '../components/container/card';
 import {CardButton} from '../components/control/card-button';
 import {IconButton} from '../components/control/icon-button';
-import {Story} from '../store/stories';
+import {Story, useStoriesContext} from '../store/stories';
 import {ViewEditors} from '../components/collab/ViewEditors';
 import {useDialogsContext} from '../dialogs';
+import {refreshStory} from "../store/stories/action-creators/intertwine-functions";
 export interface CollabActionsProps {
 	story?: Story;
 }
@@ -23,6 +24,7 @@ export const CollabActions: React.FC<CollabActionsProps> = ({story}) => {
 	const [testError, setTestError] = React.useState<Error>();
 	const {t} = useTranslation();
 	const {dispatch} = useDialogsContext();
+	const {stories, dispatch: d} = useStoriesContext();
 
 	function resetErrors() {
 		setPlayError(undefined);
@@ -38,8 +40,12 @@ export const CollabActions: React.FC<CollabActionsProps> = ({story}) => {
 		});
 	}
 
+	/**
+	 * Story should be updated using the refreshStory function.
+	 */
 	function handleRefresh() {
 		console.log('Refresh page...');
+		refreshStory(story, stories,d);
 	}
 
 	return (
