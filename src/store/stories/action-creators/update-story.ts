@@ -8,7 +8,8 @@ import {ownerUpdateFunction} from "./intertwine-functions";
 export function updateStory(
 	stories: Story[],
 	story: Story,
-	props: Partial<Story>
+	props: Partial<Story>,
+	user: String | undefined,
 ): UpdateStoryAction {
 	if (
 		props.name &&
@@ -17,6 +18,9 @@ export function updateStory(
 			.some(s => s.id !== story.id)
 	) {
 		throw new Error(`There is already a story named "${props.name}".`);
+	}
+	if(!(user === story.owner)){
+		throw new Error(`You are not the owner, and can not edit that field.`);
 	}
 	ownerUpdateFunction(story);
 	return {

@@ -18,7 +18,7 @@ export const ZoomButtons: React.FC<ZoomButtonsProps> = React.memo(({story}) => {
 
 	const handleZoomChange = React.useCallback(
 		(zoom: number) => {
-			dispatch(updateStory(stories, story, {zoom}));
+			dispatch(updateStory(stories, story, {zoom}, story.owner));
 		},
 		[dispatch, stories, story]
 	);

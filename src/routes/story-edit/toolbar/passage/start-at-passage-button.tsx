@@ -8,6 +8,7 @@ import {
 	updateStory,
 	useStoriesContext
 } from '../../../../store/stories';
+import {useAuth0} from "@auth0/auth0-react";
 
 export interface StartAtPassageButtonProps {
 	passage?: Passage;
@@ -18,13 +19,15 @@ export const StartAtPassageButton: React.FC<StartAtPassageButtonProps> = props =
 	const {passage, story} = props;
 	const {dispatch, stories} = useStoriesContext();
 	const {t} = useTranslation();
+	const {user} = useAuth0();
+	const {email} = user!;
 
 	function handleClick() {
 		if (!passage) {
 			throw new Error('No passage set');
 		}
 
-		dispatch(updateStory(stories, story, {startPassage: passage.id}));
+		dispatch(updateStory(stories, story, {startPassage: passage.id}, email));
 	}
 
 	return (

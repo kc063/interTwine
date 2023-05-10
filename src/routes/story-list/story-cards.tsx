@@ -7,6 +7,7 @@ import {setPref, usePrefsContext} from '../../store/prefs';
 import {Story, updateStory} from '../../store/stories';
 import {useUndoableStoriesContext} from '../../store/undoable-stories';
 import {Color} from '../../util/color';
+import {useAuth0} from "@auth0/auth0-react";
 
 /**
  * How wide a story card should render onscreen as.
@@ -23,6 +24,8 @@ export const StoryCards: React.FC<StoryCardsProps> = props => {
 	const {dispatch: prefsDispatch, prefs} = usePrefsContext();
 	const {dispatch: storiesDispatch} = useUndoableStoriesContext();
 	const history = useHistory();
+	const {user} = useAuth0();
+	const {email} = user!;
 
 	function handleChangeTagColor(tagName: string, color: Color) {
 		prefsDispatch(
@@ -37,7 +40,7 @@ export const StoryCards: React.FC<StoryCardsProps> = props => {
 		storiesDispatch(
 			updateStory(stories, story, {
 				tags: story.tags.filter(tag => tag !== tagName)
-			})
+			}, email)
 		);
 	}
 

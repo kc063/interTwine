@@ -14,6 +14,7 @@ import {
 import {FormatLoader} from '../../store/format-loader';
 import {DialogComponentProps} from '../dialogs.types';
 import {StoryDetailsDialogStats} from './story-stats';
+import {useAuth0} from "@auth0/auth0-react";
 
 export interface StoryDetailsDialogProps extends DialogComponentProps {
 	storyId: string;
@@ -25,6 +26,8 @@ export const StoryDetailsDialog: React.FC<StoryDetailsDialogProps> = props => {
 	const {formats} = useStoryFormatsContext();
 	const story = storyWithId(stories, storyId);
 	const {t} = useTranslation();
+	const {user} = useAuth0();
+	const {email} = user!;
 
 	function handleFormatChange(event: React.ChangeEvent<HTMLSelectElement>) {
 		const newFormat = formatWithId(formats, event.target.value);
@@ -33,7 +36,7 @@ export const StoryDetailsDialog: React.FC<StoryDetailsDialogProps> = props => {
 			updateStory(stories, story, {
 				storyFormat: newFormat.name,
 				storyFormatVersion: newFormat.version
-			})
+			}, email)
 		);
 	}
 
@@ -69,7 +72,7 @@ export const StoryDetailsDialog: React.FC<StoryDetailsDialogProps> = props => {
 				<CheckboxButton
 					label={t('dialogs.storyDetails.snapToGrid')}
 					onChange={value =>
-						dispatch(updateStory(stories, story, {snapToGrid: value}))
+						dispatch(updateStory(stories, story, {snapToGrid: value}, email))
 					}
 					value={story.snapToGrid}
 				/>

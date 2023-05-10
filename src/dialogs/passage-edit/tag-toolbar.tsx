@@ -10,6 +10,7 @@ import {
 } from '../../store/stories';
 import {useUndoableStoriesContext} from '../../store/undoable-stories';
 import {Color} from '../../util/color';
+import {useAuth0} from "@auth0/auth0-react";
 
 export interface TagToolbarProps {
 	disabled?: boolean;
@@ -21,12 +22,14 @@ export const TagToolbar: React.FC<TagToolbarProps> = props => {
 	const {disabled, passage, story} = props;
 	const {dispatch, stories} = useUndoableStoriesContext();
 	const {t} = useTranslation();
+	const {user} = useAuth0();
+	const {email} = user!;
 
 	function handleChangeTagColor(name: string, color: Color) {
 		dispatch(
 			updateStory(stories, story, {
 				tagColors: {...story.tagColors, [name]: color}
-			})
+			}, email)
 		);
 	}
 

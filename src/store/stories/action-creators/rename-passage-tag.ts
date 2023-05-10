@@ -42,7 +42,7 @@ export function renamePassageTag(
 			dispatch({
 				type: 'updateStory',
 				props: {tagColors},
-				storyId: story.id
+				storyId: story.id,
 			});
 		}
 	};
