@@ -46,6 +46,8 @@ export const PassageActions: React.FC<PassageActionsProps> = props => {
 
 		dispatch(updatePassage(story, passage, {name}, {dontUpdateOthers: true}));
 	}
+	//			<SelectAllPassagesButton story={story} />
+	//     select all passages button is disabled as it doesn't work with intertwine/causes problems
 
 	return (
 		<ButtonBar>
@@ -60,7 +62,6 @@ export const PassageActions: React.FC<PassageActionsProps> = props => {
 			<TestPassageButton passage={soloSelectedPassage} story={story} />
 			<StartAtPassageButton passage={soloSelectedPassage} story={story} />
 			<GoToPassageButton onOpenFuzzyFinder={onOpenFuzzyFinder} />
-			<SelectAllPassagesButton story={story} />
 		</ButtonBar>
 	);
 };

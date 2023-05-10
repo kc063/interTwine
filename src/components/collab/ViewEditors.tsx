@@ -16,7 +16,6 @@ import {mockStory1} from '../../store/stories/action-creators/intertwine-functio
 import {remove} from 'lodash';
 
 export const ViewEditors: React.FC<DialogComponentProps> = props => {
-	// const {dispatch} = usePrefsContext();
 	const [newEditor, setNewEditor] = React.useState('');
 	const [allEditors, setAllEditors] = React.useState(
 		props.story?.editors !== undefined ? props.story?.editors : []

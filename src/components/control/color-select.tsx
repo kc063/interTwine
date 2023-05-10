@@ -6,6 +6,7 @@ import {colors, Color} from '../../util/color';
 import './color-select.css';
 
 // TODO make this use <MenuButton>
+// NOT InterTwine TODO
 
 export interface ColorSelectProps {
 	label: string;

@@ -3,8 +3,6 @@ import {axe} from 'jest-axe';
 import * as React from 'react';
 import {RouteToolbar, RouteToolbarProps} from '../route-toolbar';
 
-//TODO: FIX TESTS
-
 jest.mock('../back-button');
 
 describe('<RouteToolbar>', () => {

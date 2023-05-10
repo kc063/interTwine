@@ -70,7 +70,7 @@ export async function onSelectPassage(story: Story,
  * @param passage
  */
 export function onDeselectPassage(story: Story,
-                                  passage: Passage, user: string) {
+                                  passage: Passage) {
   passage.claimed = false;
   passage.user = "";
   putter(story, passage);

@@ -17,6 +17,7 @@ describe('FileChooser', () => {
 	});
 
 	// Todo for the same reason this test is todo on FileInput under components.
+	// Not InterTwine TODO
 
 	it.todo('calls the onChange prop when a file is chosen');
 

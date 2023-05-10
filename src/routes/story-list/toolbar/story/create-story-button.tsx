@@ -24,8 +24,7 @@ export const CreateStoryButton: React.FC = () => {
 	const {prefs} = usePrefsContext();
 	const {t} = useTranslation();
 	const {user} = useAuth0();
-	// @ts-ignore
-	const {sub} = user;
+	const {email} = user!;
 
 	function validateName(value: string) {
 		if (value.trim() === '') {
@@ -48,7 +47,7 @@ export const CreateStoryButton: React.FC = () => {
 	}
 
 	function handleSubmit() {
-		const id = createStory(stories, prefs, {name: newName, owner: sub, editors: [sub]})(
+		const id = createStory(stories, prefs, {name: newName, owner: email!, editors: []})(
 			dispatch,
 			() => stories
 		);
