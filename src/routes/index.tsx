@@ -26,7 +26,6 @@ export const Routes: React.FC = () => {
 	// differ between web and Electron contexts.
 	const {isAuthenticated} = useAuth0();
 	const {user} = useAuth0();
-	console.log('isAuthenticated: ', isAuthenticated);
 
 	React.useEffect(() => {
 		if (isAuthenticated) {
