@@ -12,7 +12,7 @@ import {useHistory} from 'react-router-dom';
 import {Auth0Provider, useAuth0} from '@auth0/auth0-react';
 import {ProfileRoute} from './profile/profile-route';
 import Loading from '../components/loading';
-import {libload} from '../store/stories/action-creators/intertwine-functions';
+import NotFoundPage from './welcome/unauthorized';
 
 export const Routes: React.FC = () => {
 	const {prefs} = usePrefsContext();
@@ -76,7 +76,17 @@ export const Routes: React.FC = () => {
 					></Route>
 				</Switch>
 			) : (
-				<WelcomeRoute />
+				<Switch>
+					<Route exact path="/">
+						<WelcomeRoute />
+					</Route>
+					<Route
+						render={path => {
+							console.warn(`User unauthorized "${path.location.pathname}"`);
+							return <NotFoundPage />;
+						}}
+					></Route>
+				</Switch>
 			)}
 		</HashRouter>
 	);

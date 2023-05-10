@@ -130,5 +130,32 @@ const mockStory2 = {
 };
 
 const library = {mockStory1, mockStory2};
+const mockStory3 = {
+	id: 'a925d682-1884-4747-880f-1a1798d15ed7',
+	ifid: '758D94F4-189D-483C-A984-D718C23ED137',
+	lastUpdate: '2023-05-02T21:10:42.402Z',
+	passages: [],
+	name: 'bonk',
+	script: '',
+	selected: false,
+	snapToGrid: true,
+	startPassage: '',
+	storyFormat: 'Harlowe',
+	storyFormatVersion: '3.3.5',
+	stylesheet: '',
+	tags: [],
+	tagColors: {},
+	zoom: 1,
+	owner: '',
+	editors: ['jc@example.com']
+};
 
-export {};
+export {
+	mockPassage1,
+	mockPassage2,
+	mockPassage3,
+	mockStory1,
+	mockStory2,
+	mockStory3,
+	library
+};

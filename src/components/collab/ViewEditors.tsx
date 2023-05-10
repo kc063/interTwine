@@ -12,6 +12,7 @@ import {Story} from '../../store/stories';
 import {useStoriesContext} from '../../store/stories';
 import {useAuth0} from '@auth0/auth0-react';
 import {ownerUpdateFunction} from '../../store/stories/action-creators/intertwine-functions';
+import {mockStory1} from '../../store/stories/action-creators/intertwine-functions/mocks';
 
 export const ViewEditors: React.FC<DialogComponentProps> = props => {
 	// const {dispatch} = usePrefsContext();
@@ -19,12 +20,18 @@ export const ViewEditors: React.FC<DialogComponentProps> = props => {
 	const [allEditors, setAllEditors] = React.useState(
 		props.story?.editors !== undefined ? props.story?.editors : []
 	);
+	/* isAddEditor: boolean that's set when there's an addition to the list of editors
+	 * to ensure that the API request within the useeffect that
+	 * runs on any change to allEditors is invoked only when there's
+	 * an addition to the list of editors
+	 */
+	const [isAddEditor, setIsAddEditor] = React.useState(false);
 	const {user} = useAuth0();
 	// const {t} = useTranslation();
 	const onShare = () => {
-		// props.story?.editors.push(newEditor);
 		if (newEditor !== '' && newEditor !== ' ') {
 			// str;
+			setIsAddEditor(true);
 			setAllEditors([...(allEditors ?? []), newEditor]);
 			console.log('Added ' + newEditor + ' to the story.');
 			setNewEditor('');
@@ -32,12 +39,13 @@ export const ViewEditors: React.FC<DialogComponentProps> = props => {
 	};
 
 	React.useEffect(() => {
-		console.log(typeof allEditors);
-		console.log(typeof props.story?.editors);
-		Object.assign(allEditors, props.story?.editors);
-		console.log(allEditors);
-		// @ts-ignore
-		ownerUpdateFunction(props.story);
+		if (isAddEditor) {
+			console.log(typeof allEditors);
+			console.log(typeof props.story?.editors);
+			props.story!.editors = allEditors;
+			console.log(props.story);
+			ownerUpdateFunction(props.story);
+		}
 	}, [allEditors]);
 
 	return (
