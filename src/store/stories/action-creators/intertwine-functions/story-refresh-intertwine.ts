@@ -97,7 +97,7 @@ export function refreshStory(story: Story | undefined, stories: Story[], dispatc
           if (isStoryLoadResponse(responseObject)) {
             if (isStory(responseObject.data)) {
               console.log(responseObject.data);
-              dispatch(updateStory(stories, story, responseObject.data));
+              dispatch(updateStory(stories, story, responseObject.data, story.owner));
             } else {
               console.log("Error: response was success, but data was malformed passage.")
             }

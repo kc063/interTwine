@@ -25,6 +25,7 @@ export async function getStore(userId: string | undefined, dispatch: StoriesDisp
     .then((response: Response) => response.json())
     .then(
          (responseObject: any) => {
+           console.log(responseObject);
           let stories: Story[] = [];
           if ((issuccessStoryLoadResponse(responseObject))) {
             for (let i = 0; i < responseObject.data.length; i++) {

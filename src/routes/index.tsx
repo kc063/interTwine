@@ -26,11 +26,11 @@ export const Routes: React.FC = () => {
 	// differ between web and Electron contexts.
 	const {isAuthenticated} = useAuth0();
 	const {user} = useAuth0();
-	console.log('isAuthenticated: ', isAuthenticated);
 
 	React.useEffect(() => {
 		if (isAuthenticated) {
-			getStore(user?.sub, dispatch).then(d => dispatch(d)).catch(e => console.error(e));
+			console.log("getstore call");
+			getStore(user?.email, dispatch).then(d => dispatch(d)).catch(e => console.error(e));
 		}
 	}, [isAuthenticated]);
 
