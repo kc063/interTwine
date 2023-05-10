@@ -6,6 +6,7 @@ import {usePrefsContext} from '../../store/prefs';
 import './dialogs.css';
 
 // TODO move this to separate module to avoid circular dep
+// not InterTwine TODO
 const DialogTransition: React.FC = props => (
 	<CSSTransition classNames="pop" timeout={200} {...props}>
 		{props.children}

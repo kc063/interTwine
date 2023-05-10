@@ -20,12 +20,11 @@ export function usePassageChangeHandlers(story: Story) {
 	const {dispatch: undoableStoriesDispatch} = useUndoableStoriesContext();
 	const {dispatch: dialogsDispatch} = useDialogsContext();
 	const {user} = useAuth0();
-	//@ts-ignore
-	const {sub} = user;
+	let {sub} = user!;
 
 	const handleDeselectPassage = React.useCallback(
 		(passage: Passage) =>
-			undoableStoriesDispatch(deselectPassage(story, passage, sub)),
+			undoableStoriesDispatch(deselectPassage(story, passage)),
 		[story, undoableStoriesDispatch]
 	);
 
@@ -65,7 +64,7 @@ export function usePassageChangeHandlers(story: Story) {
 
 	const handleSelectPassage = React.useCallback(
 		(passage: Passage, exclusive: boolean) =>
-			undoableStoriesDispatch(selectPassage(story, passage, exclusive, sub)),
+			undoableStoriesDispatch(selectPassage(story, passage, exclusive, sub!)),
 		[story, undoableStoriesDispatch]
 	);
 
@@ -84,7 +83,7 @@ export function usePassageChangeHandlers(story: Story) {
 				selectPassagesInRect(
 					story,
 					logicalRect,
-						sub,
+						sub!,
 						additive ? selectedPassages.map(passage => passage.id) : [],
 
 				)

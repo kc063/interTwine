@@ -40,6 +40,7 @@ export function createStory(state: StoriesState, storyProps: Partial<Story>) {
 		...passage,
 		story: story.id
 	}));
+	console.log("eebo");
 	onCreateStory(story);
 	return [...state, story];
 }

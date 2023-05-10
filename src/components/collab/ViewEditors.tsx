@@ -14,7 +14,6 @@ import {useAuth0} from '@auth0/auth0-react';
 import {ownerUpdateFunction} from '../../store/stories/action-creators/intertwine-functions';
 
 export const ViewEditors: React.FC<DialogComponentProps> = props => {
-	// const {dispatch} = usePrefsContext();
 	const [newEditor, setNewEditor] = React.useState('');
 	const [allEditors, setAllEditors] = React.useState(
 		props.story?.editors !== undefined ? props.story?.editors : []
@@ -36,7 +35,6 @@ export const ViewEditors: React.FC<DialogComponentProps> = props => {
 		console.log(typeof props.story?.editors);
 		Object.assign(allEditors, props.story?.editors);
 		console.log(allEditors);
-		// @ts-ignore
 		ownerUpdateFunction(props.story);
 	}, [allEditors]);
 

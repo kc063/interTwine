@@ -7,6 +7,7 @@ import {
 	Story,
 	useStoriesContext
 } from '../../../../store/stories';
+import {onCreateStory} from "../../../../store/stories/action-creators/intertwine-functions";
 
 export interface DuplicateStoryButtonProps {
 	story?: Story;
@@ -24,6 +25,7 @@ export const DuplicateStoryButton: React.FC<DuplicateStoryButtonProps> = ({
 		}
 
 		dispatch(duplicateStory(story, stories));
+		//onCreateStory()
 	}
 
 	return (

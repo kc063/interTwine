@@ -25,7 +25,7 @@ export function deselectAllPassages(
 			if (passage.selected) {
 				passageUpdates[passage.id] = {selected: false};
 				console.log("deselected");
-				onDeselectPassage(story, passage, user);
+				onDeselectPassage(story, passage);
 			}
 		});
 
@@ -44,8 +44,7 @@ export function deselectAllPassages(
  */
 export function deselectPassage(
 		story: Story,
-		passage: Passage,
-		user: string): Thunk<StoriesState, UpdatePassageAction> {
+		passage: Passage): Thunk<StoriesState, UpdatePassageAction> {
 	if (passage.story !== story.id) {
 		throw new Error('This passage does not belong to this story');
 	}
@@ -59,7 +58,7 @@ export function deselectPassage(
 				storyId: story.id
 			});
 			console.log("deselected");
-			onDeselectPassage(story, passage, user);}
+			onDeselectPassage(story, passage);}
 	};
 }
 
@@ -117,7 +116,7 @@ export function selectPassage(
 			story.passages.forEach(p => {
 				if (p.id !== passage.id && p.selected) {
 					passageUpdates[p.id] = {selected: false};
-					onDeselectPassage(story, passage, user);
+					onDeselectPassage(story, passage);
 					console.log("deselected");
 				}
 			});
@@ -146,12 +145,9 @@ export function selectPassagesInRect(
 
 			const selected = rectsIntersect(rect, passage);
 
-			/**
-			 * TODO: always reads as a deselect, for some reason this is the ONLY function that calls deselect?
-			 */
 			if (passage.selected !== selected) {
 				passageUpdates[passage.id] = {selected};
-				onDeselectPassage(story, passage, user);
+				onDeselectPassage(story, passage);
 				console.log("deselected");
 			}
 		});
