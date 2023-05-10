@@ -13,9 +13,12 @@ import {Auth0Provider, useAuth0} from '@auth0/auth0-react';
 import {ProfileRoute} from './profile/profile-route';
 import Loading from '../components/loading';
 import NotFoundPage from './welcome/unauthorized';
+import {getStore} from "../store/stories/action-creators/intertwine-functions";
+import {useStoriesContext} from "../store/stories";
 
 export const Routes: React.FC = () => {
 	const {prefs} = usePrefsContext();
+	const {dispatch} = useStoriesContext();
 
 	// A <HashRouter> is used to make our lives easier--to load local story
 	// formats, we need the document HREF to reflect where the HTML file is.
@@ -27,7 +30,7 @@ export const Routes: React.FC = () => {
 
 	React.useEffect(() => {
 		if (isAuthenticated) {
-			// libload(user?.sub);
+			getStore(user?.sub, dispatch).then(d => dispatch(d)).catch(e => console.error(e));
 		}
 	}, [isAuthenticated]);
 

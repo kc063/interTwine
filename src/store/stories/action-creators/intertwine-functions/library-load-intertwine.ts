@@ -28,7 +28,7 @@ export async function getStore(userId: string | undefined, dispatch: StoriesDisp
           let stories: Story[] = [];
           if ((issuccessStoryLoadResponse(responseObject))) {
             for (let i = 0; i < responseObject.data.length; i++) {
-              //console.log(responseObject.data[i].passages);
+              console.log(responseObject.data[i].passages);
               stories.push(responseObject.data[i]);
             }
             //console.log("interior" + stories);

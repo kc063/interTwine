@@ -13,6 +13,7 @@ import {Dispatch} from "react";
 
 /**
  * Deselects all passages.
+ * Should not fail for any reason.
  */
 export function deselectAllPassages(
 	story: Story,
@@ -41,6 +42,7 @@ export function deselectAllPassages(
 
 /**
  * Deselects a single passage.
+ * Should not fail.
  */
 export function deselectPassage(
 		story: Story,
@@ -64,6 +66,7 @@ export function deselectPassage(
 
 /**
  * Selects all passages.
+ * Disabled for InterTwine purposes, effectively called by nothing.
  */
 export function selectAllPassages(
 	story: Story,
@@ -92,6 +95,7 @@ export function selectAllPassages(
 
 /**
  * Selects a single passage.
+ * Can fail.
  */
 export function selectPassage(
 	story: Story,
@@ -107,6 +111,7 @@ export function selectPassage(
 		const passageUpdates: Record<string, Partial<Passage>> = {};
 
 		if (!passage.selected) {
+			//if(onSelectPassage)
 			passageUpdates[passage.id] = {selected: true};
 			onSelectPassage(story, passage, user);
 			console.log("selected");
