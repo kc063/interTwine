@@ -13,12 +13,14 @@ import {useStoriesContext} from '../../store/stories';
 import {useAuth0} from '@auth0/auth0-react';
 import {ownerUpdateFunction} from '../../store/stories/action-creators/intertwine-functions';
 import {mockStory1} from '../../store/stories/action-creators/intertwine-functions/mocks';
+import {remove} from 'lodash';
 
 export const ViewEditors: React.FC<DialogComponentProps> = props => {
 	const [newEditor, setNewEditor] = React.useState('');
 	const [allEditors, setAllEditors] = React.useState(
 		props.story?.editors !== undefined ? props.story?.editors : []
 	);
+	const [removeEditor, setRemoveEditor] = React.useState('');
 	/* isAddEditor: boolean that's set when there's an addition to the list of editors
 	 * to ensure that the API request within the useeffect that
 	 * runs on any change to allEditors is invoked only when there's
@@ -37,10 +39,21 @@ export const ViewEditors: React.FC<DialogComponentProps> = props => {
 		}
 	};
 
+	// const onClose = () => {
+	// 	console.log('remove editor');
+	// 	// setIsAddEditor(true);
+	// 	setAllEditors(allEditors.filter((editor) => editor !== ))
+	// };
+
+	React.useEffect(() => {
+		if (removeEditor !== '' && removeEditor !== ' ') {
+			setAllEditors(allEditors.filter(editor => editor !== removeEditor));
+			console.log('Removed ' + removeEditor + ' from the story.');
+		}
+	}, [removeEditor]);
+
 	React.useEffect(() => {
 		if (isAddEditor) {
-			console.log(typeof allEditors);
-			console.log(typeof props.story?.editors);
 			props.story!.editors = allEditors;
 			console.log(props.story);
 			ownerUpdateFunction(props.story);
@@ -66,6 +79,15 @@ export const ViewEditors: React.FC<DialogComponentProps> = props => {
 					<ul className="no-bullets">
 						<li key={editor}>
 							<IconButton icon={<IconPencil />} label={editor} />
+							<IconButton
+								icon={<IconX />}
+								iconOnly
+								label={'Remove editor'}
+								onClick={() => {
+									setRemoveEditor(editor);
+								}}
+								tooltipPosition="bottom"
+							/>
 						</li>
 					</ul>
 				))}
