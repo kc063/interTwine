@@ -12,12 +12,10 @@ import {useHistory} from 'react-router-dom';
 import {Auth0Provider, useAuth0} from '@auth0/auth0-react';
 import {ProfileRoute} from './profile/profile-route';
 import Loading from '../components/loading';
-import {getStore} from '../store/stories/action-creators/intertwine-functions';
-import {createStory, useStoriesContext} from "../store/stories";
+import NotFoundPage from './welcome/unauthorized';
 
 export const Routes: React.FC = () => {
 	const {prefs} = usePrefsContext();
-	const {dispatch, stories} = useStoriesContext();
 
 	// A <HashRouter> is used to make our lives easier--to load local story
 	// formats, we need the document HREF to reflect where the HTML file is.
@@ -29,11 +27,7 @@ export const Routes: React.FC = () => {
 
 	React.useEffect(() => {
 		if (isAuthenticated) {
-			console.log("library load 1: ");
-			const fetchLib = async () => {
-				await getStore(user?.sub, dispatch);
-			}
-			fetchLib().catch(console.error);
+			// libload(user?.sub);
 		}
 	}, [isAuthenticated]);
 
@@ -81,7 +75,17 @@ export const Routes: React.FC = () => {
 					></Route>
 				</Switch>
 			) : (
-				<WelcomeRoute />
+				<Switch>
+					<Route exact path="/">
+						<WelcomeRoute />
+					</Route>
+					<Route
+						render={path => {
+							console.warn(`User unauthorized "${path.location.pathname}"`);
+							return <NotFoundPage />;
+						}}
+					></Route>
+				</Switch>
 			)}
 		</HashRouter>
 	);
