@@ -84,6 +84,7 @@ export function refreshStory(
 			.then((response: Response) => response.json())
 			.then((responseObject: any) => {
 				if (isStoryLoadResponse(responseObject)) {
+					responseObject.data = JSON.parse(responseObject.data);
 					if (isStory(responseObject.data)) {
 						console.log(responseObject.data);
 						dispatch(
@@ -170,5 +171,5 @@ export interface deleteResponse {
  */
 export interface storyLoadResponse {
 	result: string;
-	data: Story;
+	data: string;
 }
