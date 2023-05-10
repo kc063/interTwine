@@ -19,9 +19,10 @@ export const StoryActions: React.FC<StoryActionsProps> = props => {
 	const {user} = useAuth0();
 	const {email} = user!;
 
+	// 			<FindReplaceButton story={story} />
+	// find/replace button removed for InterTwine Testing Purposes
 	return (
 		<ButtonBar>
-			<FindReplaceButton story={story} />
 			<RenameStoryButton
 				existingStories={stories}
 				onRename={name => dispatch(updateStory(stories, story, {name}, email))}
