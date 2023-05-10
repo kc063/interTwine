@@ -13,8 +13,8 @@ import {Auth0Provider, useAuth0} from '@auth0/auth0-react';
 import {ProfileRoute} from './profile/profile-route';
 import Loading from '../components/loading';
 import NotFoundPage from './welcome/unauthorized';
-import {getStore} from "../store/stories/action-creators/intertwine-functions";
-import {useStoriesContext} from "../store/stories";
+import {getStore} from '../store/stories/action-creators/intertwine-functions';
+import {useStoriesContext} from '../store/stories';
 
 export const Routes: React.FC = () => {
 	const {prefs} = usePrefsContext();
@@ -29,8 +29,9 @@ export const Routes: React.FC = () => {
 
 	React.useEffect(() => {
 		if (isAuthenticated) {
-			console.log("getstore call");
-			getStore(user?.email, dispatch).then(d => dispatch(d)).catch(e => console.error(e));
+			getStore(user?.email, dispatch)
+				.then(d => dispatch(d))
+				.catch(e => console.error(e));
 		}
 	}, [isAuthenticated]);
 
