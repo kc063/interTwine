@@ -8,6 +8,7 @@ import {
 	updateStory,
 	useStoriesContext
 } from '../../../../store/stories';
+import {useAuth0} from "@auth0/auth0-react";
 
 export interface TagStoryButtonProps {
 	story?: Story;
@@ -17,6 +18,8 @@ export const TagStoryButton: React.FC<TagStoryButtonProps> = props => {
 	const {story} = props;
 	const {dispatch: prefsDispatch, prefs} = usePrefsContext();
 	const {dispatch: storiesDispatch, stories} = useStoriesContext();
+	const {user} = useAuth0();
+	const {email} = user!;
 
 	function handleAddTag(tagName: string, tagColor?: string) {
 		if (!story) {
@@ -26,7 +29,7 @@ export const TagStoryButton: React.FC<TagStoryButtonProps> = props => {
 		storiesDispatch(
 			updateStory(stories, story, {
 				tags: story.tags ? [...story.tags, tagName] : [tagName]
-			})
+			}, email)
 		);
 
 		if (tagColor) {

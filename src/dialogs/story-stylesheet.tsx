@@ -9,6 +9,7 @@ import {storyWithId, updateStory, useStoriesContext} from '../store/stories';
 import {codeMirrorOptionsFromPrefs} from '../util/codemirror-options';
 import {DialogComponentProps} from './dialogs.types';
 import './story-stylesheet.css';
+import {useAuth0} from "@auth0/auth0-react";
 
 export interface StoryStylesheetDialogProps extends DialogComponentProps {
 	storyId: string;
@@ -21,6 +22,8 @@ export const StoryStylesheetDialog: React.FC<StoryStylesheetDialogProps> = props
 	const {prefs} = usePrefsContext();
 	const story = storyWithId(stories, storyId);
 	const {t} = useTranslation();
+	const {user} = useAuth0();
+	const {email} = user!;
 
 	const handleChange = (
 		editor: CodeMirror.Editor,
@@ -28,7 +31,7 @@ export const StoryStylesheetDialog: React.FC<StoryStylesheetDialogProps> = props
 		text: string
 	) => {
 		setCmEditor(editor);
-		dispatch(updateStory(stories, story, {stylesheet: text}));
+		dispatch(updateStory(stories, story, {stylesheet: text}, email));
 	};
 
 	return (

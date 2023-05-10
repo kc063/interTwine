@@ -7,6 +7,7 @@ import {DeleteStoryButton} from './delete-story-button';
 import {DuplicateStoryButton} from './duplicate-story-button';
 import {EditStoryButton} from './edit-story-button';
 import {TagStoryButton} from './tag-story-button';
+import {useAuth0} from "@auth0/auth0-react";
 
 export interface StoryActionsProps {
 	selectedStory?: Story;
@@ -15,6 +16,8 @@ export interface StoryActionsProps {
 export const StoryActions: React.FC<StoryActionsProps> = props => {
 	const {selectedStory} = props;
 	const {dispatch, stories} = useStoriesContext();
+	const {user} = useAuth0();
+	const {email} = user!;
 
 	return (
 		<ButtonBar>
@@ -24,7 +27,7 @@ export const StoryActions: React.FC<StoryActionsProps> = props => {
 			<RenameStoryButton
 				existingStories={stories}
 				onRename={name =>
-					dispatch(updateStory(stories, selectedStory!, {name}))
+					dispatch(updateStory(stories, selectedStory!, {name}, email))
 				}
 				story={selectedStory}
 			/>

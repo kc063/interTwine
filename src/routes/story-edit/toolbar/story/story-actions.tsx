@@ -7,6 +7,7 @@ import {FindReplaceButton} from './find-replace-button';
 import {JavaScriptButton} from './javascript-button';
 import {PassageTagsButton} from './passage-tags-button';
 import {StylesheetButton} from './stylesheet-button';
+import {useAuth0} from "@auth0/auth0-react";
 
 export interface StoryActionsProps {
 	story: Story;
@@ -15,13 +16,15 @@ export interface StoryActionsProps {
 export const StoryActions: React.FC<StoryActionsProps> = props => {
 	const {dispatch, stories} = useStoriesContext();
 	const {story} = props;
+	const {user} = useAuth0();
+	const {email} = user!;
 
 	return (
 		<ButtonBar>
 			<FindReplaceButton story={story} />
 			<RenameStoryButton
 				existingStories={stories}
-				onRename={name => dispatch(updateStory(stories, story, {name}))}
+				onRename={name => dispatch(updateStory(stories, story, {name}, email))}
 				story={story}
 			/>
 			<DetailsButton story={story} />
