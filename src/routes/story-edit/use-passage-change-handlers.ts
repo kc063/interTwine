@@ -10,7 +10,18 @@ import {
 } from '../../store/stories';
 import {useUndoableStoriesContext} from '../../store/undoable-stories';
 import {Point, Rect} from '../../util/geometry';
-import {useAuth0} from "@auth0/auth0-react";
+import {User, useAuth0} from '@auth0/auth0-react';
+import {
+	isSelectClaimedResponse,
+	isSelectDeleteResponse,
+	isPassage,
+	isSelectSuccessResponse,
+	isStory,
+	isSuccessResponse,
+	putter
+} from '../../store/stories/action-creators/intertwine-functions';
+import {deletePassage} from '../../store/stories';
+import {updatePassage} from '../../store/stories';
 
 export function usePassageChangeHandlers(story: Story) {
 	const selectedPassages = React.useMemo(
@@ -62,11 +73,52 @@ export function usePassageChangeHandlers(story: Story) {
 		[dialogsDispatch, story.id]
 	);
 
-	const handleSelectPassage = React.useCallback(
-		(passage: Passage, exclusive: boolean) =>
-			undoableStoriesDispatch(selectPassage(story, passage, exclusive, sub!)),
-		[story, undoableStoriesDispatch]
-	);
+	const handleSelectPassage = (passage: Passage, exclusive: boolean) => {
+		fetch('http://localhost:1320/passages?id=' + passage.id, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+			.then((response: Response) => response.json())
+			.then((responseObject: any) => {
+				if (isSelectSuccessResponse(responseObject)) {
+					// if the passage is not claimed, claim it
+					responseObject.data = JSON.parse(responseObject.data);
+					console.log(responseObject.data);
+					if (isPassage(responseObject.data)) {
+						passage.user = sub!;
+						passage.claimed = true;
+						updatePassage(story, passage, responseObject.data);
+						putter(story, passage);
+						// React.useCallback(
+						// 	(passage: Passage, exclusive: boolean) =>
+						undoableStoriesDispatch(
+							selectPassage(story, passage, exclusive, sub!)
+						);
+						// );
+					} else {
+						console.log('Malformed passage data.');
+					}
+				} else if (isSelectClaimedResponse(responseObject)) {
+					// responseObject.data = JSON.parse(responseObject.data);
+					if (isPassage(responseObject.data)) {
+						console.log(responseObject.data);
+						updatePassage(story, passage, responseObject.data);
+					} else {
+						console.log(
+							'Error: response was claimed, but data was malformed passage.'
+						);
+					}
+				} else if (isSelectDeleteResponse(responseObject)) {
+					console.log(responseObject.result);
+					deletePassage(story, passage);
+				} else {
+					console.log('Error: bad response type for selection.');
+					console.log(responseObject);
+				}
+			});
+	};
 
 	const handleSelectRect = React.useCallback(
 		(rect: Rect, additive: boolean) => {
@@ -83,9 +135,8 @@ export function usePassageChangeHandlers(story: Story) {
 				selectPassagesInRect(
 					story,
 					logicalRect,
-						sub!,
-						additive ? selectedPassages.map(passage => passage.id) : [],
-
+					sub!,
+					additive ? selectedPassages.map(passage => passage.id) : []
 				)
 			);
 		},
