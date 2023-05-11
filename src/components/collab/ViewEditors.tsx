@@ -72,22 +72,26 @@ export const ViewEditors: React.FC<DialogComponentProps> = props => {
 			<div className="scroll">
 				<IconButton
 					icon={<IconCrown />}
-					label={user?.email ?? ''}
+					label={props.story?.owner ?? ''}
 					onClick={() => window.open('mailto: ' + user?.email)}
 				/>
 				{allEditors?.map(editor => (
 					<ul className="no-bullets">
 						<li key={editor}>
 							<IconButton icon={<IconPencil />} label={editor} />
-							<IconButton
-								icon={<IconX />}
-								iconOnly
-								label={'Remove editor'}
-								onClick={() => {
-									setRemoveEditor(editor);
-								}}
-								tooltipPosition="bottom"
-							/>
+							{user?.email === props.story?.owner ? (
+								<IconButton
+									icon={<IconX />}
+									iconOnly
+									label={'Remove editor'}
+									onClick={() => {
+										setRemoveEditor(editor);
+									}}
+									tooltipPosition="bottom"
+								/>
+							) : (
+								''
+							)}
 						</li>
 					</ul>
 				))}
