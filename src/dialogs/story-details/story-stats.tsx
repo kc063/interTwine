@@ -46,7 +46,7 @@ export const StoryDetailsDialogStats: React.FC<StoryDetailsDialogStatsProps> = p
 			<div className="update-and-ifid">
 				<p>
 					{t('dialogs.storyDetails.stats.lastUpdate', {
-						date: dateFormatter.format(story.lastUpdate)
+						date: story.lastUpdate,
 					})}
 				</p>
 				<p>
