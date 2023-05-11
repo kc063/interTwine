@@ -88,7 +88,13 @@ export function refreshStory(
 					if (isStory(responseObject.data)) {
 						console.log(responseObject.data);
 						dispatch(
-							updateStory(stories, story, responseObject.data, story.owner)
+							updateStory(
+								stories,
+								story,
+								responseObject.data,
+								story.owner,
+								true
+							)
 						);
 					} else {
 						console.log(
