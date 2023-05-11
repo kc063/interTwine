@@ -24,7 +24,7 @@ export interface PassageFuzzyFinderProps {
 export const PassageFuzzyFinder: React.FC<PassageFuzzyFinderProps> = props => {
 	const {onClose, onOpen, open, setCenter, story} = props;
 	const {user} = useAuth0();
-	const {sub} = user!;
+	const {email} = user!;
 	const {dispatch, stories} = useStoriesContext();
 	const [search, setSearch] = React.useState('');
 	const [debouncedSearch, setDebouncedSearch] = React.useState('');
@@ -61,7 +61,7 @@ export const PassageFuzzyFinder: React.FC<PassageFuzzyFinderProps> = props => {
 
 	function handleSelectResult(index: number) {
 		setCenter(matches[index]);
-		dispatch(selectPassage(story, matches[index], true, sub!));
+		dispatch(selectPassage(story, matches[index], true, email!));
 		setSearch('');
 		onClose();
 	}

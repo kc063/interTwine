@@ -31,7 +31,7 @@ export function usePassageChangeHandlers(story: Story) {
 	const {dispatch: undoableStoriesDispatch} = useUndoableStoriesContext();
 	const {dispatch: dialogsDispatch} = useDialogsContext();
 	const {user} = useAuth0();
-	let {sub} = user!;
+	let {email} = user!;
 
 	const handleDeselectPassage = React.useCallback(
 		(passage: Passage) =>
@@ -87,14 +87,14 @@ export function usePassageChangeHandlers(story: Story) {
 					responseObject.data = JSON.parse(responseObject.data);
 					console.log(responseObject.data);
 					if (isPassage(responseObject.data)) {
-						passage.user = sub!;
+						passage.user = email!;
 						passage.claimed = true;
 						updatePassage(story, passage, responseObject.data);
 						putter(story, passage);
 						// React.useCallback(
 						// 	(passage: Passage, exclusive: boolean) =>
 						undoableStoriesDispatch(
-							selectPassage(story, passage, exclusive, sub!)
+							selectPassage(story, passage, exclusive, email!)
 						);
 						// );
 					} else {
@@ -135,7 +135,7 @@ export function usePassageChangeHandlers(story: Story) {
 				selectPassagesInRect(
 					story,
 					logicalRect,
-					sub!,
+					email!,
 					additive ? selectedPassages.map(passage => passage.id) : []
 				)
 			);
