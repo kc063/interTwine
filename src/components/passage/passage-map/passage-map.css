@@ -32,6 +32,10 @@
 	will-change: transform;
 }
 
+.passage-map .passage-card.claimed {
+	color: #9e1845;
+}
+
 .passage-map .passage-card.selected {
 	transform: translate(var(--drag-offset-left), var(--drag-offset-top));
 }

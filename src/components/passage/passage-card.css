@@ -55,6 +55,12 @@
 	box-shadow: none;
 }
 
+.passage-card.claimed .card {
+	background: hsla(030, 90%, 60%, 0.6);
+	border: 1px dashed var(--red);
+	box-shadow: none;
+}
+
 .compact-passage-cards .passage-card h2 {
 	align-items: center;
 	display: flex;
