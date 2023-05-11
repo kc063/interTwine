@@ -49,6 +49,12 @@
 	box-shadow: none;
 }
 
+.passage-card.empty.claimed .card {
+	background: hsla(030, 90%, 60%, 0.1);
+	border: 1px dashed var(--red);
+	box-shadow: none;
+}
+
 .compact-passage-cards .passage-card h2 {
 	align-items: center;
 	display: flex;
@@ -74,4 +80,10 @@
 
 [data-app-theme='dark'] .passage-card.empty.selected .card {
 	background: hsla(212, 90%, 60%, 0.2);
+}
+
+[data-app-theme='dark'] .passage-card.empty.claimed .card {
+	background: hsla(030, 90%, 60%, 0.2);
+	border: 1px dashed var(--red);
+	box-shadow: none;
 }

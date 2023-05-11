@@ -9,6 +9,8 @@ import {Passage, TagColors} from '../../store/stories';
 import {TagStripe} from '../tag/tag-stripe';
 import {passageIsEmpty} from '../../util/passage-is-empty';
 import './passage-card.css';
+import {passageIsClaimed} from "../../util/passage-is-claimed";
+import {useAuth0} from "@auth0/auth0-react";
 
 export interface PassageCardProps {
 	onEdit: (passage: Passage) => void;
@@ -36,11 +38,15 @@ export const PassageCard: React.FC<PassageCardProps> = React.memo(props => {
 		tagColors
 	} = props;
 	const {t} = useTranslation();
+	const {user} = useAuth0();
+	const {sub} = user!;
+	const claimed = passageIsClaimed(passage, sub!);
 	const className = React.useMemo(
 		() =>
 			classNames('passage-card', {
 				empty: passageIsEmpty(passage),
-				selected: passage.selected
+				selected: passage.selected,
+				claimed: passageIsClaimed(passage,sub!)
 			}),
 		[passage]
 	);
@@ -114,6 +120,7 @@ export const PassageCard: React.FC<PassageCardProps> = React.memo(props => {
 					onDoubleClick={handleEdit}
 					onSelect={handleSelect}
 					selected={passage.selected}
+					claimed={claimed}
 				>
 					<TagStripe tagColors={tagColors} tags={passage.tags} />
 					<h2>{passage.name}</h2>

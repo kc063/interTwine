@@ -2,16 +2,18 @@ import classNames from 'classnames';
 import * as React from 'react';
 import {Card, CardProps} from './card';
 import './selectable-card.css';
+import {passageIsClaimed} from "../../../util/passage-is-claimed";
 
 export interface SelectableCardProps extends CardProps {
 	label: string;
 	onDoubleClick?: React.MouseEventHandler;
 	onSelect: (value: boolean, exclusive: boolean) => void;
 	selected?: boolean;
+	claimed?: boolean;
 }
 
 export const SelectableCard: React.FC<SelectableCardProps> = props => {
-	const {label, onDoubleClick, onSelect, selected, ...other} = props;
+	const {label, onDoubleClick, onSelect, selected, claimed, ...other} = props;
 	const onClick = React.useCallback(
 		(event: React.MouseEvent) => {
 			if (event.ctrlKey || event.shiftKey) {
@@ -39,7 +41,7 @@ export const SelectableCard: React.FC<SelectableCardProps> = props => {
 
 	return (
 		<div
-			className={classNames('selectable-card', {selected})}
+			className={classNames('selectable-card', {selected, claimed})}
 			role="button"
 			aria-label={label}
 			aria-pressed={selected}
