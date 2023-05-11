@@ -23,7 +23,7 @@ export async function onSelectPassage(
 	passage: Passage,
 	user: string
 ) {
-	fetch('http://localhost:3232/passages?id=' + passage.id, {
+	fetch('http://localhost:1320/passages?id=' + passage.id, {
 		method: 'GET',
 		headers: {
 			'Content-Type': 'application/json'
@@ -79,7 +79,7 @@ export function onDeselectPassage(story: Story, passage: Passage) {
  */
 export function putter(story: Story, passage: Passage) {
 	console.log(JSON.stringify(passage));
-	fetch('http://localhost:3232/passages/' + passage.id, {
+	fetch('http://localhost:1320/passages/' + passage.id, {
 		method: 'PUT',
 		body: JSON.stringify(passage),
 		headers: {
@@ -104,7 +104,7 @@ export function putter(story: Story, passage: Passage) {
  */
 export function onCreatePassage(story: Story, passage: Passage) {
 	//appropriate backend call
-	fetch('http://localhost:3232/passages', {
+	fetch('http://localhost:1320/passages', {
 		method: 'POST',
 		body: JSON.stringify(passage),
 		headers: {
@@ -130,7 +130,7 @@ export function onCreatePassage(story: Story, passage: Passage) {
  */
 export function onDeletePassage(story: Story, passageId: string) {
 	//appropriate backend call
-	fetch('http://localhost:3232/passages/' + passageId, {
+	fetch('http://localhost:1320/passages/' + passageId, {
 		headers: {
 			'Content-Type': 'application/json'
 		},
@@ -154,7 +154,9 @@ export function onDeletePassage(story: Story, passageId: string) {
  * @param rjson the json to check
  * @returns whether the format is that of a successful response
  */
-function isSelectSuccessResponse(rjson: any): rjson is selectSuccessResponse {
+export function isSelectSuccessResponse(
+	rjson: any
+): rjson is selectSuccessResponse {
 	if (!('result' in rjson)) return false;
 	if (rjson['result'] === 'success') {
 		if (!('data' in rjson)) return false;
@@ -169,7 +171,9 @@ function isSelectSuccessResponse(rjson: any): rjson is selectSuccessResponse {
  * @param rjson the json to check
  * @returns whether the format is that of a claim response.
  */
-function isSelectClaimedResponse(rjson: any): rjson is selectClaimedResponse {
+export function isSelectClaimedResponse(
+	rjson: any
+): rjson is selectClaimedResponse {
 	if (!('result' in rjson)) return false;
 	if (rjson['result'] === 'error_claimed') {
 		if (!('data' in rjson)) return false;
@@ -184,7 +188,9 @@ function isSelectClaimedResponse(rjson: any): rjson is selectClaimedResponse {
  * @param rjson the json to check
  * @returns whether the format is that of a claim response.
  */
-function isSelectDeleteResponse(rjson: any): rjson is selectDeleteResponse {
+export function isSelectDeleteResponse(
+	rjson: any
+): rjson is selectDeleteResponse {
 	if (!('result' in rjson)) return false;
 	if (rjson['result'] === 'error_datasource') {
 		return true;

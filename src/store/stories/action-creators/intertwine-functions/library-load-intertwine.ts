@@ -6,7 +6,7 @@ import {
 } from '../../stories.types';
 import {Thunk} from 'react-hook-thunk-reducer';
 import {isStory} from './passage-select-intertwine-options';
-import {tokenError} from "@auth0/auth0-react/dist/utils";
+import {tokenError} from '@auth0/auth0-react/dist/utils';
 
 /**
  * Getting the stored data from the backend.
@@ -19,7 +19,7 @@ export async function getStore(
 ): Promise<Thunk<StoriesState, StoriesAction>> {
 	console.log(userId);
 	if (userId) {
-		fetch('http://localhost:3232/libraryload/' + userId, {
+		fetch('http://localhost:1320/libraryload/' + userId, {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json'
@@ -52,8 +52,8 @@ export async function getStore(
 				}
 			});
 	}
-	console.log("cringe if true");
-	return Promise.reject("No update possible.");
+	console.log('cringe if true');
+	return Promise.reject('No update possible.');
 }
 
 /**
