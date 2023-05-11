@@ -41,6 +41,7 @@ export const PassageCard: React.FC<PassageCardProps> = React.memo(props => {
 	const {user} = useAuth0();
 	const {sub} = user!;
 	const claimed = passageIsClaimed(passage, sub!);
+	console.log(claimed);
 	const className = React.useMemo(
 		() =>
 			classNames('passage-card', {
@@ -95,7 +96,13 @@ export const PassageCard: React.FC<PassageCardProps> = React.memo(props => {
 		[onDeselect, onSelect, passage]
 	);
 	const handleEdit = React.useCallback(
-		() => onEdit(passage),
+		() => {
+			if(!passageIsClaimed(passage, sub!)){
+				onEdit(passage)
+			}
+			else{
+				console.log("Passage is claimed")}
+			},
 		[onEdit, passage]
 	);
 	const handleSelect = React.useCallback(
