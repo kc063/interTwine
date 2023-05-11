@@ -6,6 +6,7 @@ import {
 } from '../../stories.types';
 import {Thunk} from 'react-hook-thunk-reducer';
 import {isStory} from './passage-select-intertwine-options';
+import {tokenError} from "@auth0/auth0-react/dist/utils";
 
 /**
  * Getting the stored data from the backend.
@@ -51,10 +52,8 @@ export async function getStore(
 				}
 			});
 	}
-	//clears everything before fetch.
-	return dispatch => {
-		dispatch({type: 'init', state: []});
-	};
+	console.log("cringe if true");
+	return Promise.reject("No update possible.");
 }
 
 /**
