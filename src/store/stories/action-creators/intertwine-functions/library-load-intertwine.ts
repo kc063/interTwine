@@ -18,7 +18,7 @@ export async function getStore(
 ): Promise<Thunk<StoriesState, StoriesAction>> {
 	console.log(userId);
 	if (userId) {
-		fetch('http://localhost:3232/libraryload/' + userId, {
+		fetch('http://localhost:1320/libraryload/' + userId, {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json'
