@@ -19,8 +19,7 @@ export async function getStore(
 ): Promise<Thunk<StoriesState, StoriesAction>> {
 	console.log(userId);
 	if (userId) {
-		//		fetch('http://localhost:1320/libraryload/' + userId, {
-		fetch('http://localhost:3000/libraryload/' + userId, {
+		fetch('http://localhost:1320/libraryload/' + userId, {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json'
@@ -29,6 +28,7 @@ export async function getStore(
 			.then((response: Response) => response.json())
 			.then((responseObject: any) => {
 				let stories: Story[] = [];
+				console.log(responseObject);
 				if (issuccessStoryLoadResponse(responseObject)) {
 					let newData: Story[] = [];
 					for (const str of responseObject.data) {
@@ -53,7 +53,6 @@ export async function getStore(
 				}
 			});
 	}
-	console.log('cringe if true');
 	return Promise.reject('No update possible.');
 }
 

@@ -17,8 +17,7 @@ import {deleteStory} from '../delete-story';
 export function onCreateStory(story: Story) {
 	console.log(JSON.stringify(story));
 	//appropriate backend call
-	fetch('http://localhost:3000/stories', {
-	//	fetch('http://localhost:1320/stories', {
+	fetch('http://localhost:1320/stories', {
 		method: 'POST',
 		body: JSON.stringify(story),
 		headers: {
@@ -43,9 +42,7 @@ export function onCreateStory(story: Story) {
  */
 export function onDeleteStory(storyId: string) {
 	//appropriate backend call
-	fetch('http://localhost:3000/stories/' + storyId, {
-
-	//	fetch('http://localhost:1320/stories/' + storyId, {
+	fetch('http://localhost:1320/stories/' + storyId, {
 		headers: {
 			'Content-Type': 'application/json'
 		},

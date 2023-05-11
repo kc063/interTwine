@@ -23,8 +23,7 @@ export async function onSelectPassage(
 	passage: Passage,
 	user: string
 ) {
-	fetch('http://localhost:3000/passages?id=' + passage.id, {
-	//fetch('http://localhost:1320/passages?id=' + passage.id, {
+	fetch('http://localhost:1320/passages?id=' + passage.id, {
 		method: 'GET',
 		headers: {
 			'Content-Type': 'application/json'
@@ -80,8 +79,7 @@ export function onDeselectPassage(story: Story, passage: Passage) {
  */
 export function putter(story: Story, passage: Passage) {
 	console.log(JSON.stringify(passage));
-	fetch('http://localhost:3000/passages/' + passage.id, {
-		//fetch('http://localhost:1320/passages/' + passage.id, {
+	fetch('http://localhost:1320/passages/' + passage.id, {
 		method: 'PUT',
 		body: JSON.stringify(passage),
 		headers: {
@@ -106,9 +104,7 @@ export function putter(story: Story, passage: Passage) {
  */
 export function onCreatePassage(story: Story, passage: Passage) {
 	//appropriate backend call
-	fetch('http://localhost:3000/passages', {
-
-		//fetch('http://localhost:1320/passages', {
+	fetch("http://localhost:1320/passages", {
 		method: 'POST',
 		body: JSON.stringify(passage),
 		headers: {

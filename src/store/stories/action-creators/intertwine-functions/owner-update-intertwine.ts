@@ -15,8 +15,7 @@ import {isSuccessResponse} from './passage-select-intertwine-options';
 export function ownerUpdateFunction(story: Story | undefined) {
 	if (story) {
 		console.log(JSON.stringify(story));
-		fetch('http://localhost:3000/stories/' + story.id, {
-			//fetch('http://localhost:1320/stories/' + story.id, {
+		fetch('http://localhost:1320/stories/' + story.id, {
 			method: 'PUT',
 			body: JSON.stringify(story),
 			headers: {
