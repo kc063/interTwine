@@ -23,7 +23,7 @@ export async function onSelectPassage(
 	passage: Passage,
 	user: string
 ) {
-	fetch('http://localhost:1320/passages?id=' + passage.id, {
+	fetch('http://localhost:1320/passages?id=' + passage.id + "&user=" + user,{
 		method: 'GET',
 		headers: {
 			'Content-Type': 'application/json'
