@@ -75,7 +75,7 @@ export function refreshStory(
 	if (!story) {
 		console.log('Null story.');
 	} else {
-		fetch('http://localhost:3000/stories?id=' + story.id, {
+		fetch('http://localhost:1320/stories?id=' + story.id, {
 			//fetch('http://localhost:1320/stories?id=' + story.id, {
 			method: 'GET',
 			headers: {
