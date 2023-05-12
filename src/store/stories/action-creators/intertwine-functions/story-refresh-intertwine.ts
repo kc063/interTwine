@@ -3,11 +3,7 @@
  */
 import {Passage, StoriesDispatch, Story, TagColors} from '../../stories.types';
 import {isSuccessResponse} from './passage-select-intertwine-options';
-import {useAuth0} from '@auth0/auth0-react';
-import {updatePassage} from '../update-passage';
-import {deletePassage} from '../delete-passage';
 import {updateStory} from '../update-story';
-import {useUndoableStoriesContext} from '../../../undoable-stories';
 import {deleteStory} from '../delete-story';
 
 /**
@@ -75,8 +71,7 @@ export function refreshStory(
 	if (!story) {
 		console.log('Null story.');
 	} else {
-		fetch('http://localhost:3000/stories?id=' + story.id, {
-			//fetch('http://localhost:1320/stories?id=' + story.id, {
+		fetch('http://localhost:1320/stories?id=' + story.id, {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json'

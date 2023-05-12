@@ -17,14 +17,14 @@ export const SelectAllPassagesButton: React.FC<SelectAllPassagesButtonProps> = p
 	const {story} = props;
 	const {dispatch} = useStoriesContext();
 	const {user} = useAuth0();
-	const {sub} = user!;
+	const {email} = user!;
 	const {t} = useTranslation();
 
 	return (
 		<IconButton
 			icon={<IconMarquee />}
 			label={t('common.selectAll')}
-			onClick={() => dispatch(selectAllPassages(story, sub!))}
+			onClick={() => dispatch(selectAllPassages(story, email!))}
 		/>
 	);
 };
