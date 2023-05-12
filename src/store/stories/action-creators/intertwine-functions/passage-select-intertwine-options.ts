@@ -6,7 +6,6 @@ import {
 	UpdatePassagesAction
 } from '../../stories.types';
 import {Thunk} from 'react-hook-thunk-reducer';
-import {useAuth0} from '@auth0/auth0-react';
 import {updatePassage} from '../update-passage';
 import {useUndoableStoriesContext} from '../../../undoable-stories';
 import {deletePassage} from '../delete-passage';

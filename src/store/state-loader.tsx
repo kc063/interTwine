@@ -5,7 +5,6 @@ import {usePrefsContext} from './prefs';
 import {useStoriesContext} from './stories';
 import {useStoryFormatsContext} from './story-formats';
 import {useStoriesRepair} from './use-stories-repair';
-import {useAuth0} from "@auth0/auth0-react";
 
 export const StateLoader: React.FC = ({children}) => {
 	const [initing, setIniting] = React.useState(false);

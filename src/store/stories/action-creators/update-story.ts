@@ -1,6 +1,6 @@
 import {Story, UpdateStoryAction} from '../stories.types';
 import {storyFileName} from '../../../electron/shared';
-import {ownerUpdateFunction} from "./intertwine-functions";
+import {ownerUpdateFunction} from './intertwine-functions';
 
 /**
  * General update of a story.
@@ -10,6 +10,7 @@ export function updateStory(
 	story: Story,
 	props: Partial<Story>,
 	user: String | undefined,
+	isRefresh: Boolean = false
 ): UpdateStoryAction {
 	if (
 		props.name &&
@@ -19,10 +20,12 @@ export function updateStory(
 	) {
 		throw new Error(`There is already a story named "${props.name}".`);
 	}
-	if(!(user === story.owner)){
+	if (!(user === story.owner)) {
 		throw new Error(`You are not the owner, and can not edit that field.`);
 	}
-	ownerUpdateFunction(story);
+	if (!isRefresh) {
+		ownerUpdateFunction(story);
+	}
 	return {
 		props,
 		storyId: story.id,
