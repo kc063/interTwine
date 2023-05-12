@@ -16,8 +16,6 @@ import {
 	isSelectDeleteResponse,
 	isPassage,
 	isSelectSuccessResponse,
-	isStory,
-	isSuccessResponse,
 	putter
 } from '../../store/stories/action-creators/intertwine-functions';
 import {deletePassage} from '../../store/stories';
@@ -74,7 +72,7 @@ export function usePassageChangeHandlers(story: Story) {
 	);
 
 	const handleSelectPassage = (passage: Passage, exclusive: boolean) => {
-		fetch('http://localhost:1320/passages?id=' + passage.id, {
+		fetch('http://localhost:1320/passages?id=' + passage.id+ "&user=" + email, {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json'
@@ -91,8 +89,6 @@ export function usePassageChangeHandlers(story: Story) {
 						passage.claimed = true;
 						updatePassage(story, passage, responseObject.data);
 						putter(story, passage);
-						// React.useCallback(
-						// 	(passage: Passage, exclusive: boolean) =>
 						undoableStoriesDispatch(
 							selectPassage(story, passage, exclusive, email!)
 						);
@@ -101,7 +97,6 @@ export function usePassageChangeHandlers(story: Story) {
 						console.log('Malformed passage data.');
 					}
 				} else if (isSelectClaimedResponse(responseObject)) {
-					// responseObject.data = JSON.parse(responseObject.data);
 					if (isPassage(responseObject.data)) {
 						console.log(responseObject.data);
 						updatePassage(story, passage, responseObject.data);
